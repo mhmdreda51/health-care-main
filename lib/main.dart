@@ -32,6 +32,7 @@ class MyApp extends StatelessWidget {
 
     return MaterialApp(
       title: 'Health Care',
+      locale: Locale('ar', 'EG'),
       debugShowCheckedModeBanner: false,
       navigatorKey: navigatorKey,
       onGenerateRoute: onGenerateRoute,

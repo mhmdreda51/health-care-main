@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:health_care/constants/app_colors.dart';
+import 'package:health_care/core/router/router.dart';
 import 'package:health_care/view/doctors/cubit/cubit/doctor_cubit.dart';
 import 'package:health_care/widgets/main_button.dart';
 
 import '../../../widgets/main_drop_down.dart';
+import 'doctor_details_screen.dart';
 
 class DoctorsScreen extends StatelessWidget {
   const DoctorsScreen({super.key});
@@ -66,65 +68,73 @@ class DoctorsScreen extends StatelessWidget {
                                 const SizedBox(height: 15),
                             itemBuilder: (context, index) {
                               final item = cubit.doctorModel?.results?[index];
-                              return Container(
-                                width: double.infinity,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(15),
-                                  border: Border.all(
-                                    color: AppColors.deepBlue,
-                                  ),
-                                ),
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Expanded(
-                                      child: ClipRRect(
-                                        borderRadius: const BorderRadius.only(
-                                          topLeft: Radius.circular(15),
-                                          bottomLeft: Radius.circular(15),
-                                        ),
-                                        child: Image.asset(
-                                          "assets/images/doctor.jpg",
-                                          fit: BoxFit.cover,
-                                        ),
-                                      ),
+                              return GestureDetector(
+                                onTap: () {
+                                  MagicRouter.navigateTo(DoctorDetailsScreen(
+                                    item: item,
+                                  ));
+                                },
+                                child: Container(
+                                  width: double.infinity,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(15),
+                                    border: Border.all(
+                                      color: AppColors.deepBlue,
                                     ),
-                                    const SizedBox(width: 20),
-                                    Expanded(
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            item?.hisName ?? "",
-                                            textAlign: TextAlign.center,
-                                            style: const TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              color: AppColors.deepBlue,
-                                            ),
+                                  ),
+                                  child: Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      Expanded(
+                                        child: ClipRRect(
+                                          borderRadius: const BorderRadius.only(
+                                            topLeft: Radius.circular(15),
+                                            bottomLeft: Radius.circular(15),
                                           ),
-                                          const SizedBox(height: 10),
-                                          Text(
-                                            item?.hisSpecialty?.name ?? "",
-                                            textAlign: TextAlign.center,
-                                            style: const TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              color: AppColors.deepBlue,
-                                            ),
+                                          child: Image.asset(
+                                            "assets/images/doctor.jpg",
+                                            fit: BoxFit.cover,
                                           ),
-                                          const SizedBox(height: 10),
-                                          Text(
-                                            item?.hisClinicLocation ?? "",
-                                            textAlign: TextAlign.center,
-                                            style: const TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              color: AppColors.deepBlue,
-                                            ),
-                                          ),
-                                        ],
+                                        ),
                                       ),
-                                    )
-                                  ],
+                                      const SizedBox(width: 20),
+                                      Expanded(
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              item?.hisName ?? "",
+                                              textAlign: TextAlign.center,
+                                              style: const TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                color: AppColors.deepBlue,
+                                              ),
+                                            ),
+                                            const SizedBox(height: 10),
+                                            Text(
+                                              item?.hisSpecialty?.name ?? "",
+                                              textAlign: TextAlign.center,
+                                              style: const TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                color: AppColors.deepBlue,
+                                              ),
+                                            ),
+                                            const SizedBox(height: 10),
+                                            Text(
+                                              item?.hisClinicLocation ?? "",
+                                              textAlign: TextAlign.center,
+                                              style: const TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                color: AppColors.deepBlue,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      )
+                                    ],
+                                  ),
                                 ),
                               );
                             },

@@ -42,7 +42,7 @@ class DoctorScreenCubit extends Cubit<DoctorScreenState> {
   HomeApis homeApis = HomeApis();
   Future getUserData() async {
     emit(GetUserDataLoadingState());
-    try {
+    
       final res = await homeApis.getUserData();
       if (res is ProfileModel) {
         profileModel = res;
@@ -55,8 +55,6 @@ class DoctorScreenCubit extends Cubit<DoctorScreenState> {
         emit(GetUserDataErrorState());
         log(res.toString());
       }
-    } catch (e) {
-      print(e);
-    }
+   
   }
 }

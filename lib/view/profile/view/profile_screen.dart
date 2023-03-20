@@ -8,7 +8,7 @@ import 'package:health_care/view/profile/cubit/profile_cubit.dart';
 import 'package:health_care/widgets/main_button.dart';
 
 import '../../../widgets/app_text_form_field.dart';
-import '../../doctorScreen/view/home_screen.dart';
+import '../../home/view/home_screen.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({

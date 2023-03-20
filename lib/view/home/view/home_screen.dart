@@ -4,6 +4,8 @@ import 'package:health_care/core/router/router.dart';
 
 import '../../../constants/Strins.dart';
 import '../../../constants/app_colors.dart';
+import '../../doctors/screens/doctors_screens.dart';
+import '../../nurses/view/nurses_screen.dart';
 import '../cubit/doctor_screen_cubit.dart';
 import '../widgets/home_item.dart';
 import 'drawer_screen.dart';
@@ -40,7 +42,9 @@ class HomeScreen extends StatelessWidget {
                           child: HomeItem(
                             image: "assets/images/doctor.jpg",
                             title: "Doctors",
-                            onTap: () {},
+                            onTap: () {
+                              MagicRouter.navigateTo(const DoctorsScreen());
+                            },
                           ),
                         ),
                         const SizedBox(height: 20),
@@ -48,7 +52,9 @@ class HomeScreen extends StatelessWidget {
                           child: HomeItem(
                             image: "assets/images/doctor2.jpg",
                             title: "Nurses",
-                            onTap: () {},
+                            onTap: () {
+                              MagicRouter.navigateTo(const NurseScreen());
+                            },
                           ),
                         ),
                         const SizedBox(height: 20),

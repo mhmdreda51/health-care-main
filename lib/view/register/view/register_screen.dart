@@ -6,7 +6,7 @@ import '../../../core/router/router.dart';
 import '../../../widgets/app_text_form_field.dart';
 import '../../../widgets/auth_text_form_field.dart';
 import '../../../widgets/main_button.dart';
-import '../../doctorScreen/view/home_screen.dart';
+import '../../home/view/home_screen.dart';
 
 class RegisterScreen extends StatelessWidget {
   const RegisterScreen({super.key});

@@ -5,9 +5,10 @@ import 'package:health_care/core/router/router.dart';
 import '../../../widgets/app_text_form_field.dart';
 import '../../../widgets/auth_text_form_field.dart';
 import '../../../widgets/main_button.dart';
-import '../../doctorScreen/view/home_screen.dart';
+
 import '../../forget_password/view/forget_password_screen.dart';
 
+import '../../home/view/home_screen.dart';
 import '../../register/view/register_screen.dart';
 import '../cubit/login_cubit.dart';
 

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:health_care/constants/Strins.dart';
-import 'package:health_care/view/doctorScreen/cubit/doctor_screen_cubit.dart';
 
 import '../../../constants/app_colors.dart';
 import '../../../core/router/router.dart';
 import '../../profile/view/profile_screen.dart';
+import '../cubit/doctor_screen_cubit.dart';
 import '../widgets/drawer_item.dart';
 
 class DrawerScreen extends StatelessWidget {

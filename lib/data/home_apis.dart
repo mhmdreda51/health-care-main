@@ -1,6 +1,9 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:health_care/core/cacheHelper/cache_helper.dart';
+import 'package:health_care/core/router/router.dart';
+import 'package:health_care/view/login/view/login_screen.dart';
 
 import '../constants/end_point.dart';
 import '../core/dioHelper/dio_helper.dart';
@@ -10,15 +13,21 @@ import '../models/user_model.dart';
 
 class HomeApis {
   Future getUserData() async {
-    final response = await DioManager.dio.get(
-      profile,
-    );
-    if (response.statusCode == 200) {
-      final profileModel = ProfileModel.fromJson(response.data);
-      return profileModel;
-    } else {
-      return response.data["detail"].toString();
-    }
+    DioManager.initDioOptions();
+    try {
+      final response = await DioManager.dio.get(
+        profile,
+      );
+      if (response.statusCode == 200) {
+        final profileModel = ProfileModel.fromJson(response.data);
+        return profileModel;
+      } else if (response.statusCode == 401) {
+        CacheHelper.signOut();
+        MagicRouter.navigateAndPopAll(LoginScreen());
+      } else {
+        return;
+      }
+    } catch (e) {}
   }
 
   Future createUserData({
@@ -66,6 +75,8 @@ class HomeApis {
     required String phoneNum,
     required int userId,
   }) async {
+        DioManager.initDioOptions();
+
     final response = await DioManager.dio.put(
       "$profile/$userId/",
       data: FormData.fromMap(

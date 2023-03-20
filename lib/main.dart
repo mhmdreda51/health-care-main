@@ -1,7 +1,7 @@
 import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:health_care/view/doctorScreen/view/home_screen.dart';
+import 'package:health_care/view/home/view/home_screen.dart';
 import 'package:health_care/view/login/view/login_screen.dart';
 import 'core/bloc_observer.dart';
 import 'core/cacheHelper/cache_helper.dart';

@@ -6,6 +6,10 @@ const String forgetPassword = "accounts/forgetpassword";
 const String profile = "accounts/profiles/";
 const String logout = "accounts/logout/";
 const String doctor = "doctors/doctors/";
-const String cities = "doctors/cities/";
-const String specialty = "doctors/specialty/";
+const String doctorCities = "doctors/cities/";
+const String doctorSpecialty = "doctors/specialty/";
+const String nurses = "nurses/nursesfilter/";
+const String nursesCities = "nurses/cities/";
+const String nursesSpecialty = "nurses/specialty/";
+
 

@@ -53,4 +53,35 @@ class NursesCubit extends Cubit<NursesState> {
       log(res.toString());
     }
   }
+
+  int? cityId;
+  int? specialtyId;
+  selectCityId(int val) {
+    cityId = val;
+    emit(SelectCityIdState());
+  }
+
+  selectspecialtyId(int val) {
+    specialtyId = val;
+    emit(SelectSpecialtyIdState());
+  }
+
+  Future getAllSearchDoctors({
+    required int cityId,
+    required int specialtyId,
+  }) async {
+    emit(GetNursesSearchLoading());
+    final res = await nursesApis.getNurseWithSpecialtyIdAndCityId(
+      cityId: cityId.toString(),
+      specialtyId: specialtyId.toString(),
+    );
+    if (res is NursesModel) {
+      nursesModel = res;
+
+      emit(GetNursesSearchSuccess());
+    } else {
+      emit(GetNursesSearchError());
+      log(res.toString());
+    }
+  }
 }

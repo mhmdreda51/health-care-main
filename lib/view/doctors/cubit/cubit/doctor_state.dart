@@ -22,3 +22,13 @@ class GetDoctoresSpecialtyLoading extends DoctorState {}
 class GetDoctorsSpecialtySuccess extends DoctorState {}
 
 class GetDoctorsSpecialtyError extends DoctorState {}
+
+class SelectCityIdState extends DoctorState {}
+
+class SelectSpecialtyIdState extends DoctorState {}
+
+class GetDoctorsSearchLoading extends DoctorState {}
+
+class GetDoctorsSearchSuccess extends DoctorState {}
+
+class GetDoctorsSearchError extends DoctorState {}

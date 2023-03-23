@@ -22,3 +22,13 @@ class GetNursesSpecialtyLoading extends NursesState {}
 class GetNursesSpecialtySuccess extends NursesState {}
 
 class GetNursesSpecialtyError extends NursesState {}
+
+class GetNursesSearchLoading extends NursesState {}
+
+class GetNursesSearchSuccess extends NursesState {}
+
+class GetNursesSearchError extends NursesState {}
+
+class SelectCityIdState extends NursesState {}
+
+class SelectSpecialtyIdState extends NursesState {}

@@ -4,7 +4,6 @@ import 'package:health_care/constants/app_colors.dart';
 import 'package:health_care/core/router/router.dart';
 import 'package:health_care/view/nurses/cubit/nurses_cubit.dart';
 import 'package:health_care/widgets/main_button.dart';
-
 import '../../../widgets/main_drop_down.dart';
 import 'nurses_details_screen.dart';
 
@@ -19,7 +18,14 @@ class NurseScreen extends StatelessWidget {
         ..getAllDoctorsCities()
         ..getAllSpecialty(),
       child: BlocConsumer<NursesCubit, NursesState>(
-        listener: (context, state) {},
+        listener: (context, state) {
+          final cubit = NursesCubit.get(context);
+
+          if (state is GetNursesSearchSuccess) {
+            cubit.cityId = null;
+            cubit.specialtyId = null;
+          }
+        },
         builder: (context, state) {
           final cubit = NursesCubit.get(context);
           return Scaffold(
@@ -29,7 +35,8 @@ class NurseScreen extends StatelessWidget {
             ),
             body: state is GetNursesCitiesLoading ||
                     state is GetNursesCitiesLoading ||
-                    state is GetNursesSpecialtyLoading
+                    state is GetNursesSpecialtyLoading ||
+                    state is GetNursesSearchLoading
                 ? const Center(child: CircularProgressIndicator.adaptive())
                 : Padding(
                     padding: const EdgeInsets.all(20.0),
@@ -41,7 +48,14 @@ class NurseScreen extends StatelessWidget {
                                   ?.map((e) => e.name ?? "")
                                   .toList() ??
                               [],
-                          onChanged: (val) {},
+                          onChanged: (val) {
+                            cubit.selectCityId(
+                              cubit.citiesModel?.results?.indexWhere(
+                                    (element) => element.name == val,
+                                  ) ??
+                                  0,
+                            );
+                          },
                         ),
                         const SizedBox(height: 20),
                         MainDropDown(
@@ -50,11 +64,26 @@ class NurseScreen extends StatelessWidget {
                                   ?.map((e) => e.name ?? "")
                                   .toList() ??
                               [],
-                          onChanged: (val) {},
+                          onChanged: (val) {
+                            cubit.selectCityId(
+                              cubit.specialtyModel?.results?.indexWhere(
+                                    (element) => element.name == val,
+                                  ) ??
+                                  0,
+                            );
+                          },
                         ),
                         const SizedBox(height: 20),
                         MainButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            if (cubit.cityId != null ||
+                                cubit.specialtyId != null) {
+                              cubit.getAllSearchDoctors(
+                                cityId: (cubit.cityId ?? 0) + 1,
+                                specialtyId: (cubit.specialtyId ?? 0) + 1,
+                              );
+                            }
+                          },
                           height: 50,
                           width: MediaQuery.of(context).size.width - 200,
                           text: "Search",

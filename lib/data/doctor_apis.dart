@@ -1,3 +1,7 @@
+import 'dart:developer';
+
+import 'package:health_care/core/dioHelper/dio_helper.dart';
+
 import '../constants/end_point.dart';
 import '../core/dio_manager.dart';
 import '../models/city_model.dart';
@@ -18,7 +22,8 @@ class DoctorsApis {
       return response.data["detail"].toString();
     }
   }
-    Future getAllCities() async {
+
+  Future getAllCities() async {
     DioManager.initDioOptions();
 
     final response = await DioManager.dio.get(
@@ -31,7 +36,8 @@ class DoctorsApis {
       return response.data["detail"].toString();
     }
   }
-      Future getAllSpecialty() async {
+
+  Future getAllSpecialty() async {
     DioManager.initDioOptions();
 
     final response = await DioManager.dio.get(
@@ -42,6 +48,27 @@ class DoctorsApis {
       return specialtyModel;
     } else {
       return response.data["detail"].toString();
+    }
+  }
+
+  Future getDoctorsWithSpecialtyIdAndCityId({
+    required String cityId,
+    required String specialtyId,
+  }) async {
+    DioHelper.init();
+
+    try {
+      final response = await DioHelper.getData(
+        url: "$doctor?his_specialty$specialtyId=&his_city=$cityId",
+      );
+      if (response.statusCode == 200) {
+        final doctorModel = DoctorModel.fromJson(response.data);
+        return doctorModel;
+      } else {
+        return response.data["detail"].toString();
+      }
+    } catch (e) {
+      log(e.toString());
     }
   }
 }

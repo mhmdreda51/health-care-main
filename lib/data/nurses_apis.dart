@@ -1,4 +1,7 @@
+import 'dart:developer';
+
 import '../constants/end_point.dart';
+import '../core/dioHelper/dio_helper.dart';
 import '../core/dio_manager.dart';
 import '../models/nurces_ specialty_model.dart';
 import '../models/nurces_cities.dart';
@@ -44,6 +47,27 @@ class NursesApis {
       return specialtyModel;
     } else {
       return response.data["detail"].toString();
+    }
+  }
+
+  Future getNurseWithSpecialtyIdAndCityId({
+    required String cityId,
+    required String specialtyId,
+  }) async {
+    DioHelper.init();
+
+    try {
+      final response = await DioHelper.getData(
+        url: "$doctor?his_specialty$specialtyId=&his_city=$cityId",
+      );
+      if (response.statusCode == 200) {
+        final doctorModel = NursesModel.fromJson(response.data);
+        return doctorModel;
+      } else {
+        return response.data["detail"].toString();
+      }
+    } catch (e) {
+      log(e.toString());
     }
   }
 }

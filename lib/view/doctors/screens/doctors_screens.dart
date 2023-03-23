@@ -19,7 +19,14 @@ class DoctorsScreen extends StatelessWidget {
         ..getAllDoctorsCities()
         ..getAllSpecialty(),
       child: BlocConsumer<DoctorCubit, DoctorState>(
-        listener: (context, state) {},
+        listener: (context, state) {
+          final cubit = DoctorCubit.get(context);
+
+          if (state is GetDoctorsSearchSuccess) {
+            cubit.cityId = null;
+            cubit.specialtyId = null;
+          }
+        },
         builder: (context, state) {
           final cubit = DoctorCubit.get(context);
           return Scaffold(
@@ -29,7 +36,8 @@ class DoctorsScreen extends StatelessWidget {
             ),
             body: state is GetDoctorsLoading ||
                     state is GetDoctoresCitiesLoading ||
-                    state is GetDoctoresSpecialtyLoading
+                    state is GetDoctoresSpecialtyLoading ||
+                    state is GetDoctorsSearchLoading
                 ? const Center(child: CircularProgressIndicator.adaptive())
                 : Padding(
                     padding: const EdgeInsets.all(20.0),
@@ -41,7 +49,14 @@ class DoctorsScreen extends StatelessWidget {
                                   ?.map((e) => e.name ?? "")
                                   .toList() ??
                               [],
-                          onChanged: (val) {},
+                          onChanged: (val) {
+                            cubit.selectCityId(
+                              cubit.citiesModel?.results?.indexWhere(
+                                    (element) => element.name == val,
+                                  ) ??
+                                  0,
+                            );
+                          },
                         ),
                         const SizedBox(height: 20),
                         MainDropDown(
@@ -50,11 +65,26 @@ class DoctorsScreen extends StatelessWidget {
                                   ?.map((e) => e.name ?? "")
                                   .toList() ??
                               [],
-                          onChanged: (val) {},
+                          onChanged: (val) {
+                            cubit.selectCityId(
+                              cubit.specialtyModel?.results?.indexWhere(
+                                    (element) => element.name == val,
+                                  ) ??
+                                  0,
+                            );
+                          },
                         ),
                         const SizedBox(height: 20),
                         MainButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            if (cubit.cityId != null ||
+                                cubit.specialtyId != null) {
+                              cubit.getAllSearchDoctors(
+                                cityId: (cubit.cityId ?? 0) + 1,
+                                specialtyId: (cubit.specialtyId ?? 0) + 1,
+                              );
+                            }
+                          },
                           height: 50,
                           width: MediaQuery.of(context).size.width - 200,
                           text: "Search",

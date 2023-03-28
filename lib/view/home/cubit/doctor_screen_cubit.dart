@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:health_care/core/router/router.dart';
 import 'package:health_care/view/login/view/login_screen.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../../../core/cacheHelper/cache_helper.dart';
 import '../../../data/auth_apis.dart';
@@ -56,5 +57,13 @@ class DoctorScreenCubit extends Cubit<DoctorScreenState> {
         log(res.toString());
       }
    
+  }
+  XFile? xray;
+    void pickImageFromGallery() async {
+    final ImagePicker picker = ImagePicker();
+    final imageFile = await picker.pickImage(source: ImageSource.gallery);
+    if (imageFile == null) return;
+    xray = imageFile;
+    emit(PickUserImageState());
   }
 }

@@ -1,3 +1,4 @@
+import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:health_care/core/router/router.dart';
@@ -19,8 +20,14 @@ class HomeScreen extends StatelessWidget {
       create: (context) => DoctorScreenCubit()..getUserData(),
       child: BlocConsumer<DoctorScreenCubit, DoctorScreenState>(
         listener: (context, state) {
+          final cubit = DoctorScreenCubit.get(context);
+
           if (state is GetUserDataNotCompleteState) {
             MagicRouter.navigateAndPopAll(const Scaffold());
+          }
+          if (state is GetUserDataErrorState) {
+            cubit.logOut();
+            BotToast.showText(text: "انتهت صلاحيه الجلسه الخاصه بك");
           }
         },
         builder: (context, state) {

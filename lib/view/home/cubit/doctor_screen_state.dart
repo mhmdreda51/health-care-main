@@ -18,3 +18,5 @@ class GetUserDataSuccessState extends DoctorScreenState {}
 class GetUserDataErrorState extends DoctorScreenState {}
 
 class GetUserDataNotCompleteState extends DoctorScreenState {}
+class PickUserImageState extends DoctorScreenState {}
+

@@ -7,6 +7,7 @@ import '../../../core/router/router.dart';
 import '../../profile/view/profile_screen.dart';
 import '../cubit/doctor_screen_cubit.dart';
 import '../widgets/drawer_item.dart';
+import 'history_data_screen.dart';
 
 class DrawerScreen extends StatelessWidget {
   const DrawerScreen({super.key});
@@ -78,7 +79,14 @@ class DrawerScreen extends StatelessWidget {
                             const SizedBox(height: 20),
                             DrawerItem(
                               title: "History Data",
-                              onTap: () {},
+                              onTap: () {
+                                MagicRouter.navigateTo(
+                                  BlocProvider.value(
+                                    value: cubit,
+                                    child: const HistoryDataScreen(),
+                                  ),
+                                );
+                              },
                             ),
                             const SizedBox(height: 20),
                             DrawerItem(

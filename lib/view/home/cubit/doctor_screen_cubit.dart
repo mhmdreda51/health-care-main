@@ -19,6 +19,7 @@ class DoctorScreenCubit extends Cubit<DoctorScreenState> {
   DoctorScreenCubit() : super(DoctorScreenInitial());
   static DoctorScreenCubit get(context) => BlocProvider.of(context);
   final GlobalKey<ScaffoldState> key = GlobalKey();
+
   AuthApis authApis = AuthApis();
   Future logOut() async {
     CacheHelper.signOut();
@@ -43,23 +44,26 @@ class DoctorScreenCubit extends Cubit<DoctorScreenState> {
   HomeApis homeApis = HomeApis();
   Future getUserData() async {
     emit(GetUserDataLoadingState());
-    
-      final res = await homeApis.getUserData();
-      if (res is ProfileModel) {
-        profileModel = res;
-        if (profileModel?.count == 0 || profileModel?.count == []) {
-          emit(GetUserDataNotCompleteState());
-        } else {
-          emit(GetUserDataSuccessState());
-        }
+
+    final res = await homeApis.getUserData();
+    if (res is ProfileModel) {
+      profileModel = res;
+      if (profileModel?.count == 0 || profileModel?.count == []) {
+        emit(GetUserDataNotCompleteState());
       } else {
-        emit(GetUserDataErrorState());
-        log(res.toString());
+        emit(GetUserDataSuccessState());
       }
-   
+    } else {
+      emit(GetUserDataErrorState());
+      log(res.toString());
+    }
   }
+
   XFile? xray;
-    void pickImageFromGallery() async {
+  XFile? medicines;
+  XFile? tests;
+
+  void pickImageFromGallery() async {
     final ImagePicker picker = ImagePicker();
     final imageFile = await picker.pickImage(source: ImageSource.gallery);
     if (imageFile == null) return;

@@ -70,8 +70,7 @@ class DrawerScreen extends StatelessWidget {
                               onTap: () {
                                 MagicRouter.navigateTo(
                                   ProfileScreen(
-                                    userId:
-                                        cubit.profileModel?.results?[0].id ?? 0,
+                                    profileModel: cubit.profileModel,
                                   ),
                                 );
                               },

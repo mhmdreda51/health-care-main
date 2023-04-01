@@ -1,25 +1,52 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:health_care/core/router/router.dart';
 
+import 'package:health_care/core/router/router.dart';
 import 'package:health_care/view/profile/cubit/profile_cubit.dart';
 import 'package:health_care/widgets/main_button.dart';
 
+import '../../../models/profile_model.dart';
 import '../../../widgets/app_text_form_field.dart';
 import '../../home/view/home_screen.dart';
 
-class ProfileScreen extends StatelessWidget {
+class ProfileScreen extends StatefulWidget {
   const ProfileScreen({
     Key? key,
-    required this.userId,
+    this.profileModel,
   }) : super(key: key);
-  final int userId;
+  final ProfileModel? profileModel;
+
+  @override
+  State<ProfileScreen> createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends State<ProfileScreen> {
+  GlobalKey<FormState> profileFormKey = GlobalKey<FormState>();
+  TextEditingController firstNameController = TextEditingController();
+  TextEditingController lastNameController = TextEditingController();
+  TextEditingController ageController = TextEditingController();
+  TextEditingController phoneNumberController = TextEditingController();
+  TextEditingController disaeseTypeController = TextEditingController();
+  TextEditingController disaeseDiscController = TextEditingController();
+  @override
+  void initState() {
+    ageController.text = widget.profileModel?.results?[0].age.toString() ?? "";
+    firstNameController.text =
+        widget.profileModel?.results?[0].firstName.toString() ?? "";
+    lastNameController.text =
+        widget.profileModel?.results?[0].lastName.toString() ?? "";
+    phoneNumberController.text =
+        widget.profileModel?.results?[0].phoneNumber.toString() ?? "";
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => ProfileCubit(),
+      create: (context) => ProfileCubit()..initProfleScreen(),
       child: BlocConsumer<ProfileCubit, ProfileState>(
         listener: (context, state) {
           if (state is EditUserProfileSuccess) {
@@ -28,6 +55,7 @@ class ProfileScreen extends StatelessWidget {
         },
         builder: (context, state) {
           final cubit = ProfileCubit.get(context);
+
           return Scaffold(
             appBar: AppBar(
               title: const Text("Update Profile"),
@@ -41,7 +69,7 @@ class ProfileScreen extends StatelessWidget {
                     child: Padding(
                       padding: const EdgeInsets.all(20.0),
                       child: Form(
-                        key: cubit.profileFormKey,
+                        key: profileFormKey,
                         child: SingleChildScrollView(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.center,
@@ -95,7 +123,7 @@ class ProfileScreen extends StatelessWidget {
                                   }
                                   return null;
                                 },
-                                controller: cubit.firstNameController,
+                                controller: firstNameController,
                                 hintText: "First Name",
                                 iconColor: Colors.blue,
                               ),
@@ -112,7 +140,7 @@ class ProfileScreen extends StatelessWidget {
                                   }
                                   return null;
                                 },
-                                controller: cubit.lastNameController,
+                                controller: lastNameController,
                                 hintText: "Last Name",
                                 iconColor: Colors.blue,
                               ),
@@ -127,7 +155,7 @@ class ProfileScreen extends StatelessWidget {
 
                                   return null;
                                 },
-                                controller: cubit.ageController,
+                                controller: ageController,
                                 hintText: "Age",
                                 iconColor: Colors.blue,
                               ),
@@ -147,7 +175,7 @@ class ProfileScreen extends StatelessWidget {
                                   }
                                   return null;
                                 },
-                                controller: cubit.phoneNumberController,
+                                controller: phoneNumberController,
                                 hintText: "Phone Number",
                                 iconColor: Colors.blue,
                               ),
@@ -156,18 +184,31 @@ class ProfileScreen extends StatelessWidget {
                                 borderRadius: 35,
                                 height: 50,
                                 onPressed: () {
-                                  if (cubit.profileFormKey.currentState!
-                                          .validate() &&
-                                      cubit.userimage != null) {
-                                    cubit.editUserProfile(
-                                      image: File(cubit.userimage?.path ?? ""),
-                                      firstName: cubit.firstNameController.text,
-                                      lastName: cubit.lastNameController.text,
-                                      age: cubit.ageController.text,
-                                      phoneNum:
-                                          cubit.phoneNumberController.text,
-                                      userId: userId ,
-                                    );
+                                  if (profileFormKey.currentState!.validate()) {
+                                    cubit.userimage != null
+                                        ? cubit.editUserProfile(
+                                            image: File(
+                                              cubit.userimage?.path ?? "",
+                                            ),
+                                            firstName: firstNameController.text,
+                                            lastName: lastNameController.text,
+                                            age: ageController.text,
+                                            phoneNum:
+                                                phoneNumberController.text,
+                                            userId: widget.profileModel
+                                                    ?.results?[0].id ??
+                                                0,
+                                          )
+                                        : cubit.editUserProfile(
+                                            firstName: firstNameController.text,
+                                            lastName: lastNameController.text,
+                                            age: ageController.text,
+                                            phoneNum:
+                                                phoneNumberController.text,
+                                            userId: widget.profileModel
+                                                    ?.results?[0].id ??
+                                                0,
+                                          );
                                   }
                                 },
                                 text: "Save",

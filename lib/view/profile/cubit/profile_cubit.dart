@@ -13,17 +13,14 @@ part 'profile_state.dart';
 class ProfileCubit extends Cubit<ProfileState> {
   ProfileCubit() : super(ProfileInitial());
   static ProfileCubit get(context) => BlocProvider.of(context);
+  initProfleScreen() {
+    emit(ProfileScreenInitial());
+  }
 
   XFile? userimage;
 
   ImagePicker? imagePicker;
-  GlobalKey<FormState> profileFormKey = GlobalKey<FormState>();
-  TextEditingController firstNameController = TextEditingController();
-  TextEditingController lastNameController = TextEditingController();
-  TextEditingController ageController = TextEditingController();
-  TextEditingController phoneNumberController = TextEditingController();
-  TextEditingController disaeseTypeController = TextEditingController();
-  TextEditingController disaeseDiscController = TextEditingController();
+
 
   void pickImageFromGallery() async {
     final ImagePicker picker = ImagePicker();

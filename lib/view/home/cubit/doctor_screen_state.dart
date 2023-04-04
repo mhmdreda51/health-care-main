@@ -18,5 +18,21 @@ class GetUserDataSuccessState extends DoctorScreenState {}
 class GetUserDataErrorState extends DoctorScreenState {}
 
 class GetUserDataNotCompleteState extends DoctorScreenState {}
-class PickUserImageState extends DoctorScreenState {}
 
+class PickXrayImageState extends DoctorScreenState {}
+
+class PickTestsImageState extends DoctorScreenState {}
+
+class PickMedicionImageState extends DoctorScreenState {}
+
+class CreateMedicalLoadingState extends DoctorScreenState {}
+
+class CreateMedicalSuccessState extends DoctorScreenState {}
+
+class CreateMedicalErrorState extends DoctorScreenState {}
+
+class GetMedicalLoadingState extends DoctorScreenState {}
+
+class GetMedicalSuccessState extends DoctorScreenState {}
+
+class GetMedicalErrorState extends DoctorScreenState {}

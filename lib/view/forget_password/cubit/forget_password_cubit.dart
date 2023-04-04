@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../data/auth_apis.dart';
-
 part 'forget_password_state.dart';
 
 class ForgetPasswordCubit extends Cubit<ForgetPasswordState> {
@@ -11,5 +9,4 @@ class ForgetPasswordCubit extends Cubit<ForgetPasswordState> {
   TextEditingController emailController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
   GlobalKey<FormState> resetPasswordFormKey = GlobalKey<FormState>();
-
 }

@@ -11,5 +11,4 @@ const String doctorSpecialty = "doctors/specialty/";
 const String nurses = "nurses/nursesfilter/";
 const String nursesCities = "nurses/cities/";
 const String nursesSpecialty = "nurses/specialty/";
-
-
+const String medicalHistory = "accounts/medicalmistory/";

@@ -12,6 +12,8 @@ import '../constants/end_point.dart';
 import '../core/dioHelper/dio_helper.dart';
 import '../core/dio_manager.dart';
 import '../models/create_medical_model.dart';
+import '../models/diseases_model.dart';
+import '../models/first_aid_model.dart';
 import '../models/medical_history_model.dart';
 import '../models/profile_model.dart';
 import '../models/user_model.dart';
@@ -177,6 +179,34 @@ class HomeApis {
     );
     if (response.statusCode == 200) {
       final medicalHistory = MedicalHistory.fromJson(response.data);
+      return medicalHistory;
+    } else {
+      return response.data["detail"].toString();
+    }
+  }
+
+  Future getDiseases() async {
+    DioManager.initDioOptions();
+
+    final response = await DioManager.dio.get(
+      disease,
+    );
+    if (response.statusCode == 200) {
+      final medicalHistory = DiseasesModel.fromJson(response.data);
+      return medicalHistory;
+    } else {
+      return response.data["detail"].toString();
+    }
+  }
+
+  Future getFirstAid() async {
+    DioManager.initDioOptions();
+
+    final response = await DioManager.dio.get(
+      aid,
+    );
+    if (response.statusCode == 200) {
+      final medicalHistory = FirstAidModel.fromJson(response.data);
       return medicalHistory;
     } else {
       return response.data["detail"].toString();

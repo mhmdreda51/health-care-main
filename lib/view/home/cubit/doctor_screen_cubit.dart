@@ -14,6 +14,8 @@ import '../../../core/cacheHelper/cache_helper.dart';
 import '../../../data/auth_apis.dart';
 import '../../../data/home_apis.dart';
 import '../../../models/create_medical_model.dart';
+import '../../../models/diseases_model.dart';
+import '../../../models/first_aid_model.dart';
 import '../../../models/profile_model.dart';
 
 part 'doctor_screen_state.dart';
@@ -158,8 +160,35 @@ class DoctorScreenCubit extends Cubit<DoctorScreenState> {
     if (res is CreateMedicalHistory) {
       emit(CreateMedicalSuccessState());
     } else {
-      
       emit(CreateMedicalErrorState());
+      log(res.toString());
+    }
+  }
+
+  DiseasesModel? diseasesModel;
+  Future getDiseases() async {
+    emit(GetDiseasesLoadingState());
+
+    final res = await homeApis.getDiseases();
+    if (res is DiseasesModel) {
+      diseasesModel = res;
+      emit(GetDiseasesSuccessState());
+    } else {
+      emit(GetDiseasesErrorState());
+      log(res.toString());
+    }
+  }
+
+  FirstAidModel? firstAidModel;
+  Future getFirstAid() async {
+    emit(GetFirstAidLoadingState());
+
+    final res = await homeApis.getFirstAid();
+    if (res is FirstAidModel) {
+      firstAidModel = res;
+      emit(GetFirstAidSuccessState());
+    } else {
+      emit(GetFirstAidErrorState());
       log(res.toString());
     }
   }

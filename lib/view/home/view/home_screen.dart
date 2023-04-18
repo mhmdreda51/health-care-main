@@ -2,6 +2,7 @@ import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:health_care/core/router/router.dart';
+import 'package:health_care/view/home/view/first_aid_screen.dart';
 
 import '../../../constants/Strins.dart';
 import '../../../constants/app_colors.dart';
@@ -9,6 +10,7 @@ import '../../doctors/screens/doctors_screens.dart';
 import '../../nurses/view/nurses_screen.dart';
 import '../cubit/doctor_screen_cubit.dart';
 import '../widgets/home_item.dart';
+import 'diseases_screen.dart';
 import 'drawer_screen.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -77,7 +79,14 @@ class HomeScreen extends StatelessWidget {
                           child: HomeItem(
                             image: "assets/images/health-it.png",
                             title: "Disease Knowledge",
-                            onTap: () {},
+                            onTap: () {
+                              MagicRouter.navigateTo(
+                                BlocProvider.value(
+                                  value: cubit..getDiseases(),
+                                  child: const DiseasesScreen(),
+                                ),
+                              );
+                            },
                           ),
                         ),
                         const SizedBox(height: 20),
@@ -85,8 +94,15 @@ class HomeScreen extends StatelessWidget {
                           child: HomeItem(
                             image:
                                 "assets/images/istockphoto-1439975456-612x612.jpg",
-                            title: "First aid",
-                            onTap: () {},
+                            title: "First Aid",
+                            onTap: () {
+                              MagicRouter.navigateTo(
+                                BlocProvider.value(
+                                  value: cubit..getFirstAid(),
+                                  child: const FirstAidScreen(),
+                                ),
+                              );
+                            },
                           ),
                         ),
                       ],
@@ -114,7 +130,7 @@ class HomeScreen extends StatelessWidget {
         ),
       ),
       title: Text(
-        "Hello . ${cubit.profileModel?.results?[0].firstName} ${cubit.profileModel?.results?[0].lastName}",
+        "Hello.${cubit.profileModel?.results?[0].firstName} ${cubit.profileModel?.results?[0].lastName}",
         style: const TextStyle(
           color: AppColors.deepBlue,
         ),

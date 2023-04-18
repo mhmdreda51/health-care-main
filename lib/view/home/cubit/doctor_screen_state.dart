@@ -36,3 +36,15 @@ class GetMedicalLoadingState extends DoctorScreenState {}
 class GetMedicalSuccessState extends DoctorScreenState {}
 
 class GetMedicalErrorState extends DoctorScreenState {}
+
+class GetDiseasesLoadingState extends DoctorScreenState {}
+
+class GetDiseasesSuccessState extends DoctorScreenState {}
+
+class GetDiseasesErrorState extends DoctorScreenState {}
+
+class GetFirstAidLoadingState extends DoctorScreenState {}
+
+class GetFirstAidSuccessState extends DoctorScreenState {}
+
+class GetFirstAidErrorState extends DoctorScreenState {}

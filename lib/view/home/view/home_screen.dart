@@ -23,10 +23,6 @@ class HomeScreen extends StatelessWidget {
       child: BlocConsumer<DoctorScreenCubit, DoctorScreenState>(
         listener: (context, state) {
           final cubit = DoctorScreenCubit.get(context);
-
-          if (state is GetUserDataNotCompleteState) {
-            MagicRouter.navigateAndPopAll(const Scaffold());
-          }
           if (state is GetUserDataErrorState) {
             cubit.logOut();
             BotToast.showText(text: "انتهت صلاحيه الجلسه الخاصه بك");

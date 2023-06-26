@@ -21,7 +21,6 @@ class ProfileCubit extends Cubit<ProfileState> {
 
   ImagePicker? imagePicker;
 
-
   void pickImageFromGallery() async {
     final ImagePicker picker = ImagePicker();
     final imageFile = await picker.pickImage(source: ImageSource.gallery);
@@ -31,13 +30,12 @@ class ProfileCubit extends Cubit<ProfileState> {
   }
 
   HomeApis homeApis = HomeApis();
-  EditUserModel? editUserModel;
   Future editUserProfile({
     File? image,
-    required String firstName,
-    required String lastName,
-    required String age,
-    required String phoneNum,
+    String? firstName,
+    String? lastName,
+    String? age,
+     String? phoneNum,
     required int userId,
   }) async {
     emit(EditUserProfileLoading());
@@ -50,7 +48,6 @@ class ProfileCubit extends Cubit<ProfileState> {
       image: image,
     );
     if (res is EditUserModel) {
-      editUserModel = res;
       emit(EditUserProfileSuccess());
     } else {
       emit(EditUserProfileError(res.toString()));

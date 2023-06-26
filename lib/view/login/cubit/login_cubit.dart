@@ -24,20 +24,18 @@ class LoginCubit extends Cubit<LoginState> {
     emit(LoginChangePasswordVisibilityState());
   }
 
-  LoginModel? loginModel;
   AuthApis authApis = AuthApis();
   Future login({required String userName, required String password}) async {
     emit(LoginLoadingState());
-    try {
-      loginModel =
-          await authApis.loginAccount(userName: userName, password: password);
-      if (loginModel!.token != null) {
-        CacheHelper.cacheUserInfo(token: loginModel?.token ?? "");
-        emit(LoginSuccessState());
-      }
-    } catch (e) {
+
+    var res =
+        await authApis.loginAccount(userName: userName, password: password);
+    if (res is LoginModel) {
+      CacheHelper.cacheUserInfo(token: res.token ?? "" ,id: res.user?.id ??0);
+      emit(LoginSuccessState());
+    } else if (res is String) {
       emit(LoginErrorState());
-      BotToast.showText(text: e.toString());
+      BotToast.showText(text: res.toString());
     }
   }
 }

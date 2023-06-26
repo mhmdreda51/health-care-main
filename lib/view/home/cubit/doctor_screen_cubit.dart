@@ -5,18 +5,18 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:health_care/core/router/router.dart';
-import 'package:health_care/view/login/view/login_screen.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 import '../../../core/cacheHelper/cache_helper.dart';
+import '../../../core/router/router.dart';
 import '../../../data/auth_apis.dart';
 import '../../../data/home_apis.dart';
 import '../../../models/create_medical_model.dart';
 import '../../../models/diseases_model.dart';
 import '../../../models/first_aid_model.dart';
 import '../../../models/profile_model.dart';
+import '../../login/view/login_screen.dart';
 
 part 'doctor_screen_state.dart';
 
@@ -27,22 +27,16 @@ class DoctorScreenCubit extends Cubit<DoctorScreenState> {
 
   AuthApis authApis = AuthApis();
   Future logOut() async {
-    CacheHelper.signOut();
-    MagicRouter.navigateAndPopAll(const LoginScreen());
-    // emit(LogoutLoadingState());
-    // try {
-    //   final res = await authApis.logoutOfAccount();
-    //   if (res == "logout Success") {
-    //     CacheHelper.signOut();
-    //     MagicRouter.navigateAndPopAll(const LoginScreen());
-    //     emit(LogoutSuccessState());
-    //   } else {
-    //     emit(LogoutErrorState());
-    //   }
-    // } catch (e) {
-    //   log(e.toString());
-    //   emit(LogoutErrorState());
-    // }
+    emit(LogoutLoadingState());
+    try {
+      await authApis.logoutOfAccount();
+      CacheHelper.signOut();
+      MagicRouter.navigateAndPopAll(const LoginScreen());
+      emit(LogoutSuccessState());
+    } catch (e) {
+      log(e.toString());
+      emit(LogoutErrorState());
+    }
   }
 
   ProfileModel? profileModel;
@@ -50,7 +44,7 @@ class DoctorScreenCubit extends Cubit<DoctorScreenState> {
   Future getUserData() async {
     emit(GetUserDataLoadingState());
 
-    final res = await homeApis.getUserData();
+    final res = await homeApis.getUserData(CacheHelper.getUserId ??0);
     if (res is ProfileModel) {
       profileModel = res;
       if (profileModel?.count == 0 || profileModel?.count == []) {

@@ -35,7 +35,7 @@ class AuthApis {
       final registerModel = RegisterModel.fromJson(response.data);
       return registerModel;
     } else {
-      return response.data["non_field_errors"][0].toString();
+      return "A user with that username Or Email already exists.";
     }
   }
 

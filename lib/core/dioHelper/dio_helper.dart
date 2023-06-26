@@ -25,10 +25,10 @@ class DioHelper {
   }) async {
     dio!.options.headers = CacheHelper.getUserToken == null
         ? {
-            "Accept": "application/json",
+            'Content-Type': 'application/json',
           }
         : {
-            "Accept": "application/json",
+            'Content-Type': 'application/json',
             'Authorization': 'Bearer ${CacheHelper.getUserToken}',
           };
     return await dio!.get(
@@ -45,10 +45,10 @@ class DioHelper {
   }) async {
     dio!.options.headers = CacheHelper.getUserToken == null
         ? {
-            "Accept": "application/json",
+            'Content-Type': 'application/json',
           }
         : {
-            "Accept": "application/json",
+            'Content-Type': 'application/json',
             'Authorization': 'Bearer ${CacheHelper.getUserToken}',
           };
     return dio!.post(

@@ -38,8 +38,9 @@ class Results {
   String? name;
   String? desciption;
   String? treatment;
+  String? itsPhoto;
 
-  Results({this.id, this.name, this.desciption, this.treatment});
+  Results({this.id, this.name, this.desciption, this.treatment ,this.itsPhoto});
 
   Results.fromJson(Map<String, dynamic> json) {
     if (json["id"] is int) {
@@ -54,6 +55,9 @@ class Results {
     if (json["treatment"] is String) {
       treatment = json["treatment"];
     }
+    if (json["its_photo"] is String) {
+      itsPhoto = json["its_photo"];
+    }
   }
 
   Map<String, dynamic> toJson() {
@@ -62,6 +66,7 @@ class Results {
     _data["name"] = name;
     _data["desciption"] = desciption;
     _data["treatment"] = treatment;
+    _data["its_photo"] = itsPhoto;
     return _data;
   }
 }

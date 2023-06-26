@@ -29,31 +29,26 @@ class RegisterCubit extends Cubit<RegisterState> {
   }
 
   AuthApis authApis = AuthApis();
-  RegisterModel? registerModel;
   Future register({
     required String email,
     required String username,
     required String password,
   }) async {
     emit(RegisterLoadingState());
-    try {
-      final res = await authApis.registerAccount(
-        userName: username,
-        password: password,
-        email: email,
-      );
-      if (res is RegisterModel) {
-        CacheHelper.cacheUserInfo(token: registerModel?.token ?? "");
-        BotToast.showText(text: "register Success as ${res.user?.username}");
-        emit(RegisterSuccessState());
-      } else {
-        log(res.toString());
-        BotToast.showText(text: res.toString());
-        emit(RegisterErrorState());
-      }
-    } catch (e) {
+
+    final res = await authApis.registerAccount(
+      userName: username,
+      password: password,
+      email: email,
+    );
+    if (res is RegisterModel) {
+      CacheHelper.cacheUserInfo(token: res.token ?? "", id: res.user?.id ?? 0);
+      BotToast.showText(text: "register Success as ${res.user?.username}");
+      emit(RegisterSuccessState());
+    } else if (res is String) {
+      log(res.toString());
+      BotToast.showText(text: res.toString());
       emit(RegisterErrorState());
-      log(e.toString());
     }
   }
 }

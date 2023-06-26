@@ -33,13 +33,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
   TextEditingController disaeseDiscController = TextEditingController();
   @override
   void initState() {
-    ageController.text = widget.profileModel?.results?[0].age.toString() ?? "";
-    firstNameController.text =
-        widget.profileModel?.results?[0].firstName.toString() ?? "";
-    lastNameController.text =
-        widget.profileModel?.results?[0].lastName.toString() ?? "";
+    ageController.text = widget.profileModel?.results?[0].age ?? "";
+    firstNameController.text = widget.profileModel?.results?[0].firstName ?? "";
+    lastNameController.text = widget.profileModel?.results?[0].lastName ?? "";
     phoneNumberController.text =
-        widget.profileModel?.results?[0].phoneNumber.toString() ?? "";
+        widget.profileModel?.results?[0].phoneNumber ?? "";
     super.initState();
   }
 
@@ -86,7 +84,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                         fit: BoxFit.cover,
                                         image: cubit.userimage == null
                                             ? const AssetImage(
-                                                "assets/images/doctor.jpg")
+                                                "assets/images/doctor.jpg",
+                                              )
                                             : FileImage(
                                                 File(
                                                   cubit.userimage?.path ?? "",
@@ -115,9 +114,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 maxLines: 1,
                                 icon: Icons.person,
                                 validator: (value) {
-                                  if (value == null || value.trim().isEmpty) {
-                                    return 'This field is required';
-                                  }
                                   if (value.trim().length < 4) {
                                     return 'Username must be at least 4 characters in length';
                                   }
@@ -132,9 +128,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 maxLines: 1,
                                 icon: Icons.person,
                                 validator: (value) {
-                                  if (value == null || value.trim().isEmpty) {
-                                    return 'This field is required';
-                                  }
                                   if (value.trim().length < 4) {
                                     return 'Username must be at least 4 characters in length';
                                   }
@@ -148,13 +141,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               AppTextFormField(
                                 maxLines: 1,
                                 icon: Icons.person,
-                                validator: (value) {
-                                  if (value == null || value.trim().isEmpty) {
-                                    return 'This field is required';
-                                  }
-
-                                  return null;
-                                },
+                                validator: (value) {},
                                 controller: ageController,
                                 hintText: "Age",
                                 iconColor: Colors.blue,
@@ -166,9 +153,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 validator: (value) {
                                   String pattern = r'(^[0-9]*$)';
                                   RegExp regExp = RegExp(pattern);
-                                  if (value == null || value.trim().isEmpty) {
-                                    return "Phone must not be empty";
-                                  } else if (value.length != 11) {
+                                  if (value.length != 11) {
                                     return "Phone number must be 11 digits";
                                   } else if (!regExp.hasMatch(value)) {
                                     return "Phone number must be 11 digits";
@@ -184,32 +169,50 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 borderRadius: 35,
                                 height: 50,
                                 onPressed: () {
-                                  if (profileFormKey.currentState!.validate()) {
-                                    cubit.userimage != null
-                                        ? cubit.editUserProfile(
-                                            image: File(
-                                              cubit.userimage?.path ?? "",
-                                            ),
-                                            firstName: firstNameController.text,
-                                            lastName: lastNameController.text,
-                                            age: ageController.text,
-                                            phoneNum:
-                                                phoneNumberController.text,
-                                            userId: widget.profileModel
-                                                    ?.results?[0].id ??
-                                                0,
-                                          )
-                                        : cubit.editUserProfile(
-                                            firstName: firstNameController.text,
-                                            lastName: lastNameController.text,
-                                            age: ageController.text,
-                                            phoneNum:
-                                                phoneNumberController.text,
-                                            userId: widget.profileModel
-                                                    ?.results?[0].id ??
-                                                0,
-                                          );
-                                  }
+                                  cubit.userimage != null
+                                      ? cubit.editUserProfile(
+                                          image: File(
+                                            cubit.userimage?.path ?? "",
+                                          ),
+                                          firstName:
+                                              firstNameController.text == ""
+                                                  ? null
+                                                  : firstNameController.text,
+                                          lastName:
+                                              lastNameController.text == ""
+                                                  ? null
+                                                  : lastNameController.text,
+                                          age: ageController.text == ""
+                                              ? null
+                                              : ageController.text,
+                                          phoneNum:
+                                              phoneNumberController.text == ""
+                                                  ? null
+                                                  : phoneNumberController.text,
+                                          userId: widget.profileModel
+                                                  ?.results?[0].id ??
+                                              0,
+                                        )
+                                      : cubit.editUserProfile(
+                                          firstName:
+                                              firstNameController.text == ""
+                                                  ? null
+                                                  : firstNameController.text,
+                                          lastName:
+                                              lastNameController.text == ""
+                                                  ? null
+                                                  : lastNameController.text,
+                                          age: ageController.text == ""
+                                              ? null
+                                              : ageController.text,
+                                          phoneNum:
+                                              phoneNumberController.text == ""
+                                                  ? null
+                                                  : phoneNumberController.text,
+                                          userId: widget.profileModel
+                                                  ?.results?[0].id ??
+                                              0,
+                                        );
                                 },
                                 text: "Save",
                                 width: MediaQuery.of(context).size.width / 1.5,

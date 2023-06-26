@@ -1,3 +1,4 @@
+
 // ignore_for_file: no_leading_underscores_for_local_identifiers
 
 class RegisterModel {
@@ -7,13 +8,17 @@ class RegisterModel {
   RegisterModel({this.user, this.token});
 
   RegisterModel.fromJson(Map<String, dynamic> json) {
-    user = json["user"] == null ? null : User.fromJson(json["user"]);
-    token = json["token"];
+    if(json["user"] is Map) {
+      user = json["user"] == null ? null : User.fromJson(json["user"]);
+    }
+    if(json["token"] is String) {
+      token = json["token"];
+    }
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> _data = <String, dynamic>{};
-    if (user != null) {
+    if(user != null) {
       _data["user"] = user?.toJson();
     }
     _data["token"] = token;
@@ -29,9 +34,15 @@ class User {
   User({this.id, this.username, this.email});
 
   User.fromJson(Map<String, dynamic> json) {
-    id = json["id"];
-    username = json["username"];
-    email = json["email"];
+    if(json["id"] is int) {
+      id = json["id"];
+    }
+    if(json["username"] is String) {
+      username = json["username"];
+    }
+    if(json["email"] is String) {
+      email = json["email"];
+    }
   }
 
   Map<String, dynamic> toJson() {

@@ -41,7 +41,7 @@ class DrawerScreen extends StatelessWidget {
                             ),
                             const SizedBox(height: 20),
                             Text(
-                              "${cubit.profileModel?.results?[0].firstName} ${cubit.profileModel?.results?[0].lastName}",
+                              "${cubit.profileModel?.results?[0].firstName ?? "userName"} ${cubit.profileModel?.results?[0].lastName ?? ""}",
                               style: const TextStyle(
                                 color: AppColors.deepBlue,
                                 fontSize: 18,
@@ -50,7 +50,8 @@ class DrawerScreen extends StatelessWidget {
                             ),
                             const SizedBox(height: 8),
                             Text(
-                              "${cubit.profileModel?.results?[0].phoneNumber}",
+                              cubit.profileModel?.results?[0].phoneNumber ??
+                                  "phone",
                               style: const TextStyle(
                                 color: AppColors.deepBlue,
                                 fontSize: 14,

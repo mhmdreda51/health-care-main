@@ -37,6 +37,7 @@ class DiseasesScreen extends StatelessWidget {
                             desciption: des?.desciption ?? "",
                             title: des?.name ?? "",
                             treatment: des?.treatment ?? "",
+                            photo: des?.itsPhoto ?? dummyImage,
                           ),
                         );
                       },
@@ -45,10 +46,10 @@ class DiseasesScreen extends StatelessWidget {
                         width: MediaQuery.of(context).size.width,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(15),
-                          image: const DecorationImage(
+                          image: DecorationImage(
                             fit: BoxFit.cover,
                             image: NetworkImage(
-                              dummyImage,
+                              des?.itsPhoto ?? dummyImage,
                             ),
                           ),
                         ),

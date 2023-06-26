@@ -6,7 +6,9 @@ import 'package:health_care/view/home/view/first_aid_screen.dart';
 
 import '../../../constants/Strins.dart';
 import '../../../constants/app_colors.dart';
+import '../../../core/cacheHelper/cache_helper.dart';
 import '../../doctors/screens/doctors_screens.dart';
+import '../../login/view/login_screen.dart';
 import '../../nurses/view/nurses_screen.dart';
 import '../cubit/doctor_screen_cubit.dart';
 import '../widgets/home_item.dart';
@@ -22,9 +24,9 @@ class HomeScreen extends StatelessWidget {
       create: (context) => DoctorScreenCubit()..getUserData(),
       child: BlocConsumer<DoctorScreenCubit, DoctorScreenState>(
         listener: (context, state) {
-          final cubit = DoctorScreenCubit.get(context);
           if (state is GetUserDataErrorState) {
-            cubit.logOut();
+            CacheHelper.signOut();
+            MagicRouter.navigateAndPopAll(const LoginScreen());
             BotToast.showText(text: "انتهت صلاحيه الجلسه الخاصه بك");
           }
         },
@@ -60,14 +62,6 @@ class HomeScreen extends StatelessWidget {
                             onTap: () {
                               MagicRouter.navigateTo(const NurseScreen());
                             },
-                          ),
-                        ),
-                        const SizedBox(height: 20),
-                        Expanded(
-                          child: HomeItem(
-                            image: "assets/images/chest-xray-2-600x491.png",
-                            title: "Tests",
-                            onTap: () {},
                           ),
                         ),
                         const SizedBox(height: 20),
@@ -114,6 +108,7 @@ class HomeScreen extends StatelessWidget {
     return AppBar(
       backgroundColor: Colors.grey[50],
       elevation: 0.0,
+      centerTitle: false,
       leading: IconButton(
         onPressed: () {
           cubit.key.currentState!.openDrawer();
@@ -126,7 +121,7 @@ class HomeScreen extends StatelessWidget {
         ),
       ),
       title: Text(
-        "Hello.${cubit.profileModel?.results?[0].firstName} ${cubit.profileModel?.results?[0].lastName}",
+        "Hello. ${cubit.profileModel?.results?[0].firstName ?? "userName"} ${cubit.profileModel?.results?[0].lastName ?? ""}",
         style: const TextStyle(
           color: AppColors.deepBlue,
         ),

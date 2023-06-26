@@ -7,14 +7,18 @@ class CacheHelper {
 
   static Future<void> cacheUserInfo({
     required String token,
+    required int id,
   }) async {
     await _cacheUserToken(token);
+    await _cacheUserId(id);
   }
 
   static Future<void> _cacheUserToken(String token) async =>
       await _appBox.write('token', token);
-
-  static String? get getUserToken => _appBox.read('token') ?? "8167f4decf2c90170bf0749c0daa834e315b2c8299a6430249b18d896d53b20e";
+  static Future<void> _cacheUserId(int id) async =>
+      await _appBox.write('id', id);
+  static String? get getUserToken => _appBox.read('token');
+  static int? get getUserId => _appBox.read('id');
 
   static Future<void> signOut() async => await _appBox.erase();
 

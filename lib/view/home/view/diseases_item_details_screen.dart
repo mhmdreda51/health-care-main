@@ -1,6 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
-import 'package:health_care/constants/Strins.dart';
 
 class DiseasesItemDetailsScreen extends StatelessWidget {
   const DiseasesItemDetailsScreen({
@@ -8,10 +7,12 @@ class DiseasesItemDetailsScreen extends StatelessWidget {
     required this.title,
     required this.desciption,
     required this.treatment,
+    required this.photo,
   }) : super(key: key);
   final String title;
   final String desciption;
   final String treatment;
+  final String photo;
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +28,7 @@ class DiseasesItemDetailsScreen extends StatelessWidget {
           Expanded(
             flex: 40,
             child: Image.network(
-              dummyImage,
+              photo,
               width: double.infinity,
               fit: BoxFit.cover,
             ),

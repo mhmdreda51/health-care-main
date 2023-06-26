@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 
 class AppTextFormField extends StatelessWidget {
@@ -9,6 +10,7 @@ class AppTextFormField extends StatelessWidget {
     required this.icon,
     required this.iconColor,
     required this.maxLines,
+    required this.type,
   }) : super(key: key);
   final TextEditingController controller;
   final Function validator;
@@ -16,13 +18,14 @@ class AppTextFormField extends StatelessWidget {
   final IconData icon;
   final Color iconColor;
   final int maxLines;
+  final TextInputType type;
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       controller: controller,
       maxLines: maxLines,
       validator: (value) => validator(value),
-      keyboardType: TextInputType.text,
+      keyboardType: type,
       cursorColor: Colors.grey,
       decoration: InputDecoration(
         filled: true,

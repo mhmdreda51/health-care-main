@@ -29,7 +29,7 @@ class DioHelper {
           }
         : {
             'Content-Type': 'application/json',
-            'Authorization': 'Bearer ${CacheHelper.getUserToken}',
+            'Authorization': 'Token ${CacheHelper.getUserToken}',
           };
     return await dio!.get(
       url,
@@ -49,7 +49,7 @@ class DioHelper {
           }
         : {
             'Content-Type': 'application/json',
-            'Authorization': 'Bearer ${CacheHelper.getUserToken}',
+            'Authorization': 'Token ${CacheHelper.getUserToken}',
           };
     return dio!.post(
       url,

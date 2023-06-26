@@ -20,14 +20,14 @@ import '../models/profile_model.dart';
 import '../models/user_model.dart';
 
 class HomeApis {
-  Future<ProfileModel?> getUserData(int id) async {
+  Future<ProfileModel?> getUserData() async {
     final request = NetworkRequest(
-      path: "accounts/profiles/$id",
+      path: "accounts/profiles/",
       type: NetworkRequestType.GET,
       headers: {
         'Accept': 'application/json',
         'Content-Type': "application/json",
-        'Authorization': 'Bearer ${CacheHelper.getUserToken}',
+        "Authorization": "Token ${CacheHelper.getUserToken}"
       },
       data: const NetworkRequestBody.empty(),
     );
@@ -117,7 +117,7 @@ class HomeApis {
           ? {
               'Accept': 'application/json',
               'Content-Type': "application/json",
-              'Authorization': 'Bearer ${CacheHelper.getUserToken}',
+              "Authorization": "Token ${CacheHelper.getUserToken}"
             }
           : {
               'Accept': 'application/json',

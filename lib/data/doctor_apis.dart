@@ -52,14 +52,18 @@ class DoctorsApis {
   }
 
   Future getDoctorsWithSpecialtyIdAndCityId({
-    required String cityId,
-    required String specialtyId,
+    int? cityId,
+    int? specialtyId,
   }) async {
     DioHelper.init();
 
     try {
       final response = await DioHelper.getData(
-        url: "$doctor?his_specialty$specialtyId=&his_city=$cityId",
+        url: doctor,
+        query: {
+          "his_specialty": specialtyId,
+          "his_city": cityId,
+        },
       );
       if (response.statusCode == 200) {
         final doctorModel = DoctorModel.fromJson(response.data);

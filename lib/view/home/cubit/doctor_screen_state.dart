@@ -17,7 +17,11 @@ class GetUserDataSuccessState extends DoctorScreenState {}
 
 class GetUserDataErrorState extends DoctorScreenState {}
 
-class GetUserDataNotCompleteState extends DoctorScreenState {}
+class GetUserDataNotCompleteState extends DoctorScreenState {
+  final int id;
+
+  GetUserDataNotCompleteState(this.id);
+}
 
 class PickXrayImageState extends DoctorScreenState {}
 
@@ -48,3 +52,15 @@ class GetFirstAidLoadingState extends DoctorScreenState {}
 class GetFirstAidSuccessState extends DoctorScreenState {}
 
 class GetFirstAidErrorState extends DoctorScreenState {}
+
+class PickUserImage extends DoctorScreenState {}
+
+class EditUserProfileLoading extends DoctorScreenState {}
+
+class EditUserProfileSuccess extends DoctorScreenState {}
+
+class EditUserProfileError extends DoctorScreenState {
+  final String msg;
+
+  EditUserProfileError(this.msg);
+}

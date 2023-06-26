@@ -56,6 +56,7 @@ class RegisterScreen extends StatelessWidget {
                               const SizedBox(height: 30),
                               AppTextFormField(
                                 maxLines: 1,
+                                type: TextInputType.text,
                                 icon: Icons.person,
                                 validator: (value) {
                                   if (value == null || value.trim().isEmpty) {
@@ -73,6 +74,7 @@ class RegisterScreen extends StatelessWidget {
                               const SizedBox(height: 30),
                               AppTextFormField(
                                 maxLines: 1,
+                                type: TextInputType.text,
                                 icon: Icons.email,
                                 validator: (value) {
                                   if (value!.isEmpty) {

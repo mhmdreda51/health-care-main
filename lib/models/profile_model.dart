@@ -1,3 +1,6 @@
+
+// ignore_for_file: no_leading_underscores_for_local_identifiers
+
 class ProfileModel {
   int? count;
   dynamic next;
@@ -7,45 +10,42 @@ class ProfileModel {
   ProfileModel({this.count, this.next, this.previous, this.results});
 
   ProfileModel.fromJson(Map<String, dynamic> json) {
-    count = json["count"];
+    if(json["count"] is int) {
+      count = json["count"];
+    }
     next = json["next"];
     previous = json["previous"];
-    results = json["results"] == null
-        ? null
-        : (json["results"] as List).map((e) => Results.fromJson(e)).toList();
+    if(json["results"] is List) {
+      results = json["results"] == null ? null : (json["results"] as List).map((e) => Results.fromJson(e)).toList();
+    }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data["count"] = count;
-    data["next"] = next;
-    data["previous"] = previous;
-    if (results != null) {
-      data["results"] = results?.map((e) => e.toJson()).toList();
+    final Map<String, dynamic> _data = <String, dynamic>{};
+    _data["count"] = count;
+    _data["next"] = next;
+    _data["previous"] = previous;
+    if(results != null) {
+      _data["results"] = results?.map((e) => e.toJson()).toList();
     }
-    return data;
+    return _data;
   }
 }
 
 class Results {
   int? id;
   dynamic userPhoto;
-  String? firstName;
-  String? lastName;
+  dynamic firstName;
+  dynamic lastName;
   dynamic age;
-  String? phoneNumber;
+  dynamic phoneNumber;
 
-  Results({
-    this.id,
-    this.userPhoto,
-    this.firstName,
-    this.lastName,
-    this.age,
-    this.phoneNumber,
-  });
+  Results({this.id, this.userPhoto, this.firstName, this.lastName, this.age, this.phoneNumber});
 
   Results.fromJson(Map<String, dynamic> json) {
-    id = json["id"];
+    if(json["id"] is int) {
+      id = json["id"];
+    }
     userPhoto = json["user_photo"];
     firstName = json["first_name"];
     lastName = json["last_name"];
@@ -54,13 +54,13 @@ class Results {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data["id"] = id;
-    data["user_photo"] = userPhoto;
-    data["first_name"] = firstName;
-    data["last_name"] = lastName;
-    data["age"] = age;
-    data["phone_number"] = phoneNumber;
-    return data;
+    final Map<String, dynamic> _data = <String, dynamic>{};
+    _data["id"] = id;
+    _data["user_photo"] = userPhoto;
+    _data["first_name"] = firstName;
+    _data["last_name"] = lastName;
+    _data["age"] = age;
+    _data["phone_number"] = phoneNumber;
+    return _data;
   }
 }

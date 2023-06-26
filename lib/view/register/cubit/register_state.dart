@@ -7,6 +7,7 @@ class RegisterInitial extends RegisterState {}
 
 class SignUpChangePasswordVisibilityState extends RegisterState {}
 class RegisterLoadingState extends RegisterState {}
-class RegisterSuccessState extends RegisterState {}
+class RegisterSuccessState extends RegisterState {
+}
 class RegisterErrorState extends RegisterState {}
 

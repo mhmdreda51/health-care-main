@@ -1,3 +1,5 @@
+import 'package:health_care/core/cacheHelper/cache_helper.dart';
+
 import '../core/network_service.dart/dio_network_service.dart';
 
 const String baseUrl = "https://graduateproject.pythonanywhere.com/";
@@ -21,5 +23,6 @@ final NetworkService networkService = NetworkService(
   httpHeaders: {
     'Accept': 'application/json',
     'Content-Type': "application/json",
+    "Authorization": "Token ${CacheHelper.getUserToken}"
   },
 );

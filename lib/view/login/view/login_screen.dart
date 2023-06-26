@@ -57,6 +57,8 @@ class LoginScreen extends StatelessWidget {
                               ),
                               const SizedBox(height: 30),
                               AppTextFormField(
+                                                      type: TextInputType.text,
+
                                 maxLines: 1,
                                 icon: Icons.person,
                                 validator: (value) {

@@ -12,6 +12,7 @@ import '../../login/view/login_screen.dart';
 import '../../nurses/view/nurses_screen.dart';
 import '../cubit/doctor_screen_cubit.dart';
 import '../widgets/home_item.dart';
+import 'complete_reg_data.dart';
 import 'diseases_screen.dart';
 import 'drawer_screen.dart';
 
@@ -24,6 +25,14 @@ class HomeScreen extends StatelessWidget {
       create: (context) => DoctorScreenCubit()..getUserData(),
       child: BlocConsumer<DoctorScreenCubit, DoctorScreenState>(
         listener: (context, state) {
+          final cubit = DoctorScreenCubit.get(context);
+
+          if (state is GetUserDataNotCompleteState) {
+            MagicRouter.navigateTo(BlocProvider.value(
+              value: cubit,
+              child: CompleteRegisterData(id: state.id),
+            ));
+          }
           if (state is GetUserDataErrorState) {
             CacheHelper.signOut();
             MagicRouter.navigateAndPopAll(const LoginScreen());

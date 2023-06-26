@@ -33,7 +33,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   TextEditingController disaeseDiscController = TextEditingController();
   @override
   void initState() {
-    ageController.text = widget.profileModel?.results?[0].age ?? "";
+    ageController.text = widget.profileModel?.results?[0].age.toString() ?? "";
     firstNameController.text = widget.profileModel?.results?[0].firstName ?? "";
     lastNameController.text = widget.profileModel?.results?[0].lastName ?? "";
     phoneNumberController.text =
@@ -112,6 +112,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               const SizedBox(height: 20),
                               AppTextFormField(
                                 maxLines: 1,
+                                type: TextInputType.text,
                                 icon: Icons.person,
                                 validator: (value) {
                                   if (value.trim().length < 4) {
@@ -126,6 +127,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               const SizedBox(height: 20),
                               AppTextFormField(
                                 maxLines: 1,
+                                type: TextInputType.text,
                                 icon: Icons.person,
                                 validator: (value) {
                                   if (value.trim().length < 4) {
@@ -140,6 +142,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               const SizedBox(height: 20),
                               AppTextFormField(
                                 maxLines: 1,
+                                type: TextInputType.number,
                                 icon: Icons.person,
                                 validator: (value) {},
                                 controller: ageController,
@@ -150,6 +153,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               AppTextFormField(
                                 maxLines: 1,
                                 icon: Icons.phone,
+                                type: TextInputType.number,
                                 validator: (value) {
                                   String pattern = r'(^[0-9]*$)';
                                   RegExp regExp = RegExp(pattern);

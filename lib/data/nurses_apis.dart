@@ -58,7 +58,11 @@ class NursesApis {
 
     try {
       final response = await DioHelper.getData(
-        url: "$doctor?his_specialty$specialtyId=&his_city=$cityId",
+        url: nurses,
+        query: {
+          "his_specialty": specialtyId,
+          "his_city": cityId,
+        },
       );
       if (response.statusCode == 200) {
         final doctorModel = NursesModel.fromJson(response.data);

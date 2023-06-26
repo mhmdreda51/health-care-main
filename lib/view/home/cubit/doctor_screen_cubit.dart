@@ -16,6 +16,7 @@ import '../../../models/create_medical_model.dart';
 import '../../../models/diseases_model.dart';
 import '../../../models/first_aid_model.dart';
 import '../../../models/profile_model.dart';
+import '../../../models/user_model.dart';
 import '../../login/view/login_screen.dart';
 
 part 'doctor_screen_state.dart';
@@ -39,16 +40,31 @@ class DoctorScreenCubit extends Cubit<DoctorScreenState> {
     }
   }
 
+  XFile? userimage;
+
+  ImagePicker? imagePicker;
+
+  void pickImageFromGallery() async {
+    final ImagePicker picker = ImagePicker();
+    final imageFile = await picker.pickImage(source: ImageSource.gallery);
+    if (imageFile == null) return;
+    userimage = imageFile;
+    emit(PickUserImage());
+  }
+
   ProfileModel? profileModel;
   HomeApis homeApis = HomeApis();
   Future getUserData() async {
     emit(GetUserDataLoadingState());
-
-    final res = await homeApis.getUserData(CacheHelper.getUserId ??0);
+    final res = await homeApis.getUserData();
     if (res is ProfileModel) {
       profileModel = res;
-      if (profileModel?.count == 0 || profileModel?.count == []) {
-        emit(GetUserDataNotCompleteState());
+      if (profileModel?.results?[0].userPhoto == null &&
+          profileModel?.results?[0].firstName == null &&
+          profileModel?.results?[0].lastName == null &&
+          profileModel?.results?[0].phoneNumber == null &&
+          profileModel?.results?[0].age == null) {
+        emit(GetUserDataNotCompleteState(profileModel?.results?[0].id ?? 0));
       } else {
         emit(GetUserDataSuccessState());
       }
@@ -183,6 +199,38 @@ class DoctorScreenCubit extends Cubit<DoctorScreenState> {
       emit(GetFirstAidSuccessState());
     } else {
       emit(GetFirstAidErrorState());
+      log(res.toString());
+    }
+  }
+
+  GlobalKey<FormState> profileFormKey = GlobalKey<FormState>();
+  TextEditingController firstNameController = TextEditingController();
+  TextEditingController lastNameController = TextEditingController();
+  TextEditingController ageController = TextEditingController();
+  TextEditingController phoneNumberController = TextEditingController();
+  TextEditingController disaeseTypeController = TextEditingController();
+  TextEditingController disaeseDiscController = TextEditingController();
+  Future editUserProfile({
+    File? image,
+    String? firstName,
+    String? lastName,
+    String? age,
+    String? phoneNum,
+    required int userId,
+  }) async {
+    emit(EditUserProfileLoading());
+    final res = await homeApis.editUserData(
+      age: age,
+      firstName: firstName,
+      lastName: lastName,
+      phoneNum: phoneNum,
+      userId: userId,
+      image: image,
+    );
+    if (res is EditUserModel) {
+      emit(EditUserProfileSuccess());
+    } else {
+      emit(EditUserProfileError(res.toString()));
       log(res.toString());
     }
   }

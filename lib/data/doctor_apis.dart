@@ -1,9 +1,7 @@
-import 'dart:developer';
-
-import 'package:health_care/core/dioHelper/dio_helper.dart';
-
 import '../constants/end_point.dart';
+import '../core/cacheHelper/cache_helper.dart';
 import '../core/dio_manager.dart';
+import '../core/network_service.dart/dio_network_service.dart';
 import '../models/city_model.dart';
 import '../models/doctor_model.dart';
 import '../models/specialty_model.dart';
@@ -51,28 +49,51 @@ class DoctorsApis {
     }
   }
 
-  Future getDoctorsWithSpecialtyIdAndCityId({
+  Future<DoctorModel?> getDoctorsWithSpecialtyIdAndCityId({
     int? cityId,
     int? specialtyId,
   }) async {
-    DioHelper.init();
-
-    try {
-      final response = await DioHelper.getData(
-        url: doctor,
-        query: {
-          "his_specialty": specialtyId,
-          "his_city": cityId,
-        },
-      );
-      if (response.statusCode == 200) {
-        final doctorModel = DoctorModel.fromJson(response.data);
-        return doctorModel;
-      } else {
-        return response.data["detail"].toString();
-      }
-    } catch (e) {
-      log(e.toString());
-    }
+    final request = NetworkRequest(
+      path: doctor,
+      type: NetworkRequestType.GET,
+      queryParams: {
+        if (specialtyId != null) "his_specialty": specialtyId,
+        if (cityId != null) "his_city": cityId,
+      },
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': "application/json",
+        "Authorization": "Token ${CacheHelper.getUserToken}"
+      },
+      data: const NetworkRequestBody.empty(),
+    );
+    final response = await networkService.execute(
+      request,
+      (parser) => DoctorModel.fromJson(parser),
+    );
+    var data = response.maybeWhen(
+      ok: ((data) {
+        return data;
+      }),
+      orElse: () {
+        return null;
+      },
+      invalidParameters: (data) {
+        return data;
+      },
+      conflict: (data) {
+        return data;
+      },
+      noAccess: (data) {
+        return data;
+      },
+      noAuth: (data) {
+        return data;
+      },
+      badRequest: (data) {
+        return data;
+      },
+    );
+    return data;
   }
 }

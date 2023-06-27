@@ -170,7 +170,7 @@ class HomeApis {
     return data;
   }
 
-  Future addMedicalHistory({
+  Future<CreateMedicalHistory?> addMedicalHistory({
     required String illnesses_numbers,
     required String illnesses,
     required String illnesses_descriptions,
@@ -185,11 +185,15 @@ class HomeApis {
     required File medical_rays_images,
     required String health_habits,
   }) async {
-    DioManager.initDioOptions();
-
-    final response = await DioManager.dio.post(
-      medicalHistory,
-      data: FormData.fromMap(
+    final request = NetworkRequest(
+      path: medicalHistory,
+      type: NetworkRequestType.GET,
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': "application/json",
+        "Authorization": "Token ${CacheHelper.getUserToken}"
+      },
+      data: NetworkRequestBody.fromData(FormData.fromMap(
         {
           "illnesses_numbers": illnesses_numbers,
           "illnesses": illnesses,
@@ -215,14 +219,39 @@ class HomeApis {
             filename: medical_rays_images.path.split('/').last,
           ),
         },
-      ),
+      )),
     );
-    if (response.statusCode == 201) {
-      final createMedicalHistory = CreateMedicalHistory.fromJson(response.data);
-      return createMedicalHistory;
-    } else {
-      return response.data.toString();
-    }
+    final response = await networkService.execute(
+      request,
+      (parser) => CreateMedicalHistory.fromJson(parser),
+    );
+    var data = response.maybeWhen(
+      ok: ((data) {
+        return data;
+      }),
+      orElse: () {
+        return null;
+      },
+      invalidParameters: (data) {
+        return data;
+      },
+      conflict: (data) {
+        return data;
+      },
+      noAccess: (data) {
+        return data;
+      },
+      noAuth: (data) {
+        CacheHelper.signOut();
+        MagicRouter.navigateAndPopAll(const LoginScreen());
+        BotToast.showText(text: "انتهت صلاحيه الجلسه الخاصه بك");
+        return data;
+      },
+      badRequest: (data) {
+        return data;
+      },
+    );
+    return data;
   }
 
   Future getMedicalHistory() async {

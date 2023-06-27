@@ -1,8 +1,7 @@
-import 'dart:developer';
-
 import '../constants/end_point.dart';
-import '../core/dioHelper/dio_helper.dart';
+import '../core/cacheHelper/cache_helper.dart';
 import '../core/dio_manager.dart';
+import '../core/network_service.dart/dio_network_service.dart';
 import '../models/nurces_ specialty_model.dart';
 import '../models/nurces_cities.dart';
 import '../models/nurses_model.dart';
@@ -50,28 +49,51 @@ class NursesApis {
     }
   }
 
-  Future getNurseWithSpecialtyIdAndCityId({
-    required String cityId,
-    required String specialtyId,
+  Future<NursesModel?> getNursesWithSpecialtyIdAndCityId({
+    int? cityId,
+    int? specialtyId,
   }) async {
-    DioHelper.init();
-
-    try {
-      final response = await DioHelper.getData(
-        url: nurses,
-        query: {
-          "his_specialty": specialtyId,
-          "his_city": cityId,
-        },
-      );
-      if (response.statusCode == 200) {
-        final doctorModel = NursesModel.fromJson(response.data);
-        return doctorModel;
-      } else {
-        return response.data["detail"].toString();
-      }
-    } catch (e) {
-      log(e.toString());
-    }
+    final request = NetworkRequest(
+      path: nurses,
+      type: NetworkRequestType.GET,
+      queryParams: {
+        if (specialtyId != null) "his_specialty": specialtyId,
+        if (cityId != null) "his_city": cityId,
+      },
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': "application/json",
+        "Authorization": "Token ${CacheHelper.getUserToken}"
+      },
+      data: const NetworkRequestBody.empty(),
+    );
+    final response = await networkService.execute(
+      request,
+      (parser) => NursesModel.fromJson(parser),
+    );
+    var data = response.maybeWhen(
+      ok: ((data) {
+        return data;
+      }),
+      orElse: () {
+        return null;
+      },
+      invalidParameters: (data) {
+        return data;
+      },
+      conflict: (data) {
+        return data;
+      },
+      noAccess: (data) {
+        return data;
+      },
+      noAuth: (data) {
+        return data;
+      },
+      badRequest: (data) {
+        return data;
+      },
+    );
+    return data;
   }
 }

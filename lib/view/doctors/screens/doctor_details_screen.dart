@@ -1,15 +1,20 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+
 import 'package:health_care/core/router/router.dart';
+import 'package:health_care/view/doctors/cubit/cubit/doctor_cubit.dart';
+
+import '../../../constants/Strins.dart';
 import '../../../models/doctor_model.dart';
 
 class DoctorDetailsScreen extends StatelessWidget {
   const DoctorDetailsScreen({
     Key? key,
     this.item,
+    required this.cubit,
   }) : super(key: key);
   final Results? item;
-
+  final DoctorCubit cubit;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,8 +34,8 @@ class DoctorDetailsScreen extends StatelessWidget {
         children: [
           Expanded(
             flex: 40,
-            child: Image.asset(
-              "assets/images/doctor.jpg",
+            child: Image.network(
+              item?.hisPhoto ?? dummyImage,
               width: double.infinity,
               fit: BoxFit.cover,
             ),
@@ -69,7 +74,47 @@ class DoctorDetailsScreen extends StatelessWidget {
                   Row(
                     children: [
                       const Text(
-                        "العنوان :",
+                        "Age :",
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 16,
+                        ),
+                      ),
+                      const SizedBox(width: 8),
+                      Text(
+                        item?.hisAge.toString() ?? "",
+                        style: const TextStyle(
+                          color: Colors.black,
+                          fontSize: 16,
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 8),
+                  Row(
+                    children: [
+                      const Text(
+                        "Gender :",
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 16,
+                        ),
+                      ),
+                      const SizedBox(width: 8),
+                      Text(
+                        item?.hisSex ?? "",
+                        style: const TextStyle(
+                          color: Colors.black,
+                          fontSize: 16,
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 8),
+                  Row(
+                    children: [
+                      const Text(
+                        "Address :",
                         style: TextStyle(
                           color: Colors.black,
                           fontSize: 16,
@@ -89,7 +134,27 @@ class DoctorDetailsScreen extends StatelessWidget {
                   Row(
                     children: [
                       const Text(
-                        "عنوان العياده :",
+                        "Clinic Name :",
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 16,
+                        ),
+                      ),
+                      const SizedBox(width: 8),
+                      Text(
+                        item?.hisClinicName ?? "",
+                        style: const TextStyle(
+                          color: Colors.black,
+                          fontSize: 16,
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 8),
+                  Row(
+                    children: [
+                      const Text(
+                        "Clinic location :",
                         style: TextStyle(
                           color: Colors.black,
                           fontSize: 16,
@@ -109,7 +174,67 @@ class DoctorDetailsScreen extends StatelessWidget {
                   Row(
                     children: [
                       const Text(
-                        "رقم الهاتف:",
+                        "Clinic Price :",
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 16,
+                        ),
+                      ),
+                      const SizedBox(width: 8),
+                      Text(
+                        "${item?.hisClinicPrice.toString() ?? ""}\$",
+                        style: const TextStyle(
+                          color: Colors.black,
+                          fontSize: 16,
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 8),
+                  Row(
+                    children: [
+                      const Text(
+                        "Clinic start time :",
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 16,
+                        ),
+                      ),
+                      const SizedBox(width: 8),
+                      Text(
+                        "${item?.hisClinicStartAt.toString() ?? ""} PM",
+                        style: const TextStyle(
+                          color: Colors.black,
+                          fontSize: 16,
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 8),
+                  Row(
+                    children: [
+                      const Text(
+                        "Clinic End time :",
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 16,
+                        ),
+                      ),
+                      const SizedBox(width: 8),
+                      Text(
+                        "${item?.hisClinicFinshAt.toString() ?? ""} PM",
+                        style: const TextStyle(
+                          color: Colors.black,
+                          fontSize: 16,
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 8),
+                  Row(
+                    children: [
+                      const Text(
+                        "Phone Number:",
                         style: TextStyle(
                           color: Colors.black,
                           fontSize: 16,
@@ -129,7 +254,7 @@ class DoctorDetailsScreen extends StatelessWidget {
                   Row(
                     children: [
                       const Text(
-                        "البريد الالكتروني",
+                        "Email Address",
                         style: TextStyle(
                           color: Colors.black,
                           fontSize: 16,
@@ -152,7 +277,10 @@ class DoctorDetailsScreen extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         IconButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            cubit
+                                .makePhoneCall(item?.hisNumberForConnect ?? "");
+                          },
                           icon: const Icon(
                             Icons.call,
                             color: Colors.green,
@@ -160,7 +288,9 @@ class DoctorDetailsScreen extends StatelessWidget {
                           ),
                         ),
                         IconButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            cubit.goToGoogleMaps(item?.hisCity?.name ?? "");
+                          },
                           icon: const Icon(
                             Icons.location_on,
                             color: Colors.blue,
@@ -168,7 +298,10 @@ class DoctorDetailsScreen extends StatelessWidget {
                           ),
                         ),
                         IconButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            cubit
+                                .makePhoneChat(item?.hisNumberForConnect ?? "");
+                          },
                           icon: const Icon(
                             Icons.message,
                             color: Colors.blueAccent,

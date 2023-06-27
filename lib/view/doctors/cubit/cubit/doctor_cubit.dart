@@ -1,12 +1,14 @@
+// ignore_for_file: deprecated_member_use
+
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:health_care/models/specialty_model.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../data/doctor_apis.dart';
 import '../../../../models/city_model.dart';
-import '../../../../models/doctor_model.dart';
 
 part 'doctor_state.dart';
 
@@ -15,18 +17,6 @@ class DoctorCubit extends Cubit<DoctorState> {
   static DoctorCubit get(context) => BlocProvider.of(context);
 
   DoctorsApis doctorApis = DoctorsApis();
-  DoctorModel? doctorModel;
-  Future getAllDoctors() async {
-    emit(GetDoctorsLoading());
-    final res = await doctorApis.getAllDoctors();
-    if (res is DoctorModel) {
-      doctorModel = res;
-      emit(GetDoctorsSuccess());
-    } else {
-      emit(GetDoctorsError());
-      log(res.toString());
-    }
-  }
 
   CitiesModel? citiesModel;
   Future getAllDoctorsCities() async {
@@ -66,22 +56,27 @@ class DoctorCubit extends Cubit<DoctorState> {
     emit(SelectSpecialtyIdState());
   }
 
-  Future getAllSearchDoctors({
-    required int cityId,
-    required int specialtyId,
-  }) async {
-    emit(GetDoctorsSearchLoading());
-    final res = await doctorApis.getDoctorsWithSpecialtyIdAndCityId(
-      cityId: cityId,
-      specialtyId: specialtyId,
-    );
-    if (res is DoctorModel) {
-      doctorModel = res;
+  void makePhoneCall(String phone) async {
+    var url = 'tel:$phone';
 
-      emit(GetDoctorsSearchSuccess());
+    if (await canLaunchUrl(Uri.parse(url))) {
+      await launchUrl(Uri.parse(url));
     } else {
-      emit(GetDoctorsSearchError());
-      log(res.toString());
+      throw 'Could not launch $url';
     }
+  }
+
+  void makePhoneChat(String phone) async {
+    var url = 'https://wa.me/$phone';
+
+    if (await canLaunchUrl(Uri.parse(url))) {
+      await launchUrl(Uri.parse(url));
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
+
+  void goToGoogleMaps(String city) async {
+    launch('https://www.google.com/maps/search/$city');
   }
 }

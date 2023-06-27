@@ -1,3 +1,5 @@
+// ignore_for_file: no_leading_underscores_for_local_identifiers
+
 class DoctorModel {
   int? count;
   dynamic next;
@@ -7,23 +9,27 @@ class DoctorModel {
   DoctorModel({this.count, this.next, this.previous, this.results});
 
   DoctorModel.fromJson(Map<String, dynamic> json) {
-    count = json["count"];
+    if (json["count"] is int) {
+      count = json["count"];
+    }
     next = json["next"];
     previous = json["previous"];
-    results = json["results"] == null
-        ? null
-        : (json["results"] as List).map((e) => Results.fromJson(e)).toList();
+    if (json["results"] is List) {
+      results = json["results"] == null
+          ? null
+          : (json["results"] as List).map((e) => Results.fromJson(e)).toList();
+    }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data["count"] = count;
-    data["next"] = next;
-    data["previous"] = previous;
+    final Map<String, dynamic> _data = <String, dynamic>{};
+    _data["count"] = count;
+    _data["next"] = next;
+    _data["previous"] = previous;
     if (results != null) {
-      data["results"] = results?.map((e) => e.toJson()).toList();
+      _data["results"] = results?.map((e) => e.toJson()).toList();
     }
-    return data;
+    return _data;
   }
 }
 
@@ -64,54 +70,84 @@ class Results {
       this.hisNumberForConnect});
 
   Results.fromJson(Map<String, dynamic> json) {
-    id = json["id"];
-    hisCity =
-        json["his_city"] == null ? null : HisCity.fromJson(json["his_city"]);
-    hisSpecialty = json["his_specialty"] == null
-        ? null
-        : HisSpecialty.fromJson(json["his_specialty"]);
-    hisGovernorate = json["his_governorate"] == null
-        ? null
-        : HisGovernorate.fromJson(json["his_governorate"]);
+    if (json["id"] is int) {
+      id = json["id"];
+    }
+    if (json["his_city"] is Map) {
+      hisCity =
+          json["his_city"] == null ? null : HisCity.fromJson(json["his_city"]);
+    }
+    if (json["his_specialty"] is Map) {
+      hisSpecialty = json["his_specialty"] == null
+          ? null
+          : HisSpecialty.fromJson(json["his_specialty"]);
+    }
+    if (json["his_governorate"] is Map) {
+      hisGovernorate = json["his_governorate"] == null
+          ? null
+          : HisGovernorate.fromJson(json["his_governorate"]);
+    }
     hisPhoto = json["his_photo"];
-    hisName = json["his_name"];
-    hisAge = json["his_age"];
-    hisSex = json["his_sex"];
-    hisClinicName = json["his_clinic_name"];
-    hisClinicLocation = json["his_clinic_location"];
-    hisClinicNumber = json["his_clinic_number"];
-    hisClinicStartAt = json["his_clinic_start_at"];
-    hisClinicFinshAt = json["his_clinic_finsh_at"];
-    hisClinicPrice = json["his_clinic_price"];
-    hisEmailForConnect = json["his_email_for_connect"];
-    hisNumberForConnect = json["his_number_for_connect"];
+    if (json["his_name"] is String) {
+      hisName = json["his_name"];
+    }
+    if (json["his_age"] is int) {
+      hisAge = json["his_age"];
+    }
+    if (json["his_sex"] is String) {
+      hisSex = json["his_sex"];
+    }
+    if (json["his_clinic_name"] is String) {
+      hisClinicName = json["his_clinic_name"];
+    }
+    if (json["his_clinic_location"] is String) {
+      hisClinicLocation = json["his_clinic_location"];
+    }
+    if (json["his_clinic_number"] is String) {
+      hisClinicNumber = json["his_clinic_number"];
+    }
+    if (json["his_clinic_start_at"] is int) {
+      hisClinicStartAt = json["his_clinic_start_at"];
+    }
+    if (json["his_clinic_finsh_at"] is int) {
+      hisClinicFinshAt = json["his_clinic_finsh_at"];
+    }
+    if (json["his_clinic_price"] is int) {
+      hisClinicPrice = json["his_clinic_price"];
+    }
+    if (json["his_email_for_connect"] is String) {
+      hisEmailForConnect = json["his_email_for_connect"];
+    }
+    if (json["his_number_for_connect"] is String) {
+      hisNumberForConnect = json["his_number_for_connect"];
+    }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data["id"] = id;
+    final Map<String, dynamic> _data = <String, dynamic>{};
+    _data["id"] = id;
     if (hisCity != null) {
-      data["his_city"] = hisCity?.toJson();
+      _data["his_city"] = hisCity?.toJson();
     }
     if (hisSpecialty != null) {
-      data["his_specialty"] = hisSpecialty?.toJson();
+      _data["his_specialty"] = hisSpecialty?.toJson();
     }
     if (hisGovernorate != null) {
-      data["his_governorate"] = hisGovernorate?.toJson();
+      _data["his_governorate"] = hisGovernorate?.toJson();
     }
-    data["his_photo"] = hisPhoto;
-    data["his_name"] = hisName;
-    data["his_age"] = hisAge;
-    data["his_sex"] = hisSex;
-    data["his_clinic_name"] = hisClinicName;
-    data["his_clinic_location"] = hisClinicLocation;
-    data["his_clinic_number"] = hisClinicNumber;
-    data["his_clinic_start_at"] = hisClinicStartAt;
-    data["his_clinic_finsh_at"] = hisClinicFinshAt;
-    data["his_clinic_price"] = hisClinicPrice;
-    data["his_email_for_connect"] = hisEmailForConnect;
-    data["his_number_for_connect"] = hisNumberForConnect;
-    return data;
+    _data["his_photo"] = hisPhoto;
+    _data["his_name"] = hisName;
+    _data["his_age"] = hisAge;
+    _data["his_sex"] = hisSex;
+    _data["his_clinic_name"] = hisClinicName;
+    _data["his_clinic_location"] = hisClinicLocation;
+    _data["his_clinic_number"] = hisClinicNumber;
+    _data["his_clinic_start_at"] = hisClinicStartAt;
+    _data["his_clinic_finsh_at"] = hisClinicFinshAt;
+    _data["his_clinic_price"] = hisClinicPrice;
+    _data["his_email_for_connect"] = hisEmailForConnect;
+    _data["his_number_for_connect"] = hisNumberForConnect;
+    return _data;
   }
 }
 
@@ -121,13 +157,15 @@ class HisGovernorate {
   HisGovernorate({this.name});
 
   HisGovernorate.fromJson(Map<String, dynamic> json) {
-    name = json["name"];
+    if (json["name"] is String) {
+      name = json["name"];
+    }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data["name"] = name;
-    return data;
+    final Map<String, dynamic> _data = <String, dynamic>{};
+    _data["name"] = name;
+    return _data;
   }
 }
 
@@ -137,13 +175,15 @@ class HisSpecialty {
   HisSpecialty({this.name});
 
   HisSpecialty.fromJson(Map<String, dynamic> json) {
-    name = json["name"];
+    if (json["name"] is String) {
+      name = json["name"];
+    }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data["name"] = name;
-    return data;
+    final Map<String, dynamic> _data = <String, dynamic>{};
+    _data["name"] = name;
+    return _data;
   }
 }
 
@@ -153,12 +193,14 @@ class HisCity {
   HisCity({this.name});
 
   HisCity.fromJson(Map<String, dynamic> json) {
-    name = json["name"];
+    if (json["name"] is String) {
+      name = json["name"];
+    }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data["name"] = name;
-    return data;
+    final Map<String, dynamic> _data = <String, dynamic>{};
+    _data["name"] = name;
+    return _data;
   }
 }

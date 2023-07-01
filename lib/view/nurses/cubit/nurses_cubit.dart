@@ -44,18 +44,21 @@ class NursesCubit extends Cubit<NursesState> {
     }
   }
 
+  String? city;
+  String? specialt;
   int? cityId;
   int? specialtyId;
-  selectCityId(int val) {
+  selectCityId(int val, String value) {
     cityId = val;
+    city = value;
     emit(SelectCityIdState());
   }
 
-  selectspecialtyId(int val) {
+  selectspecialtyId(int val, String value) {
     specialtyId = val;
+    specialt = value;
     emit(SelectSpecialtyIdState());
   }
-
   void makePhoneCall(String phone) async {
     var url = 'tel:$phone';
 
@@ -78,5 +81,12 @@ class NursesCubit extends Cubit<NursesState> {
     } else {
       throw 'Could not launch $url';
     }
+  }
+    void clearSearchData() {
+    cityId = null;
+    specialtyId = null;
+    city = null;
+    specialt = null;
+    emit(ClearSearchData());
   }
 }

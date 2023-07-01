@@ -55,12 +55,16 @@ class DiseasesScreen extends StatelessWidget {
                         ),
                         padding: const EdgeInsets.all(12),
                         alignment: Alignment.bottomLeft,
-                        child: Text(
-                          des?.name ?? "",
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
+                        child: Container(
+                          padding: const EdgeInsets.all(4),
+                          color: Colors.white,
+                          child: Text(
+                            des?.name ?? "",
+                            style: const TextStyle(
+                              color: Colors.black,
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
                       ),

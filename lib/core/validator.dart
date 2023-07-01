@@ -1,6 +1,6 @@
 class Validator {
   static String? validateName(String? value) {
-    if (value!.isEmpty || value.length < 5) {
+    if (value!.isEmpty || value.length < 2) {
       return "لا يجب أن يكون الاسم فارغ";
     }
     return null;

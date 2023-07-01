@@ -37,7 +37,7 @@ class NursesDetailsScreen extends StatelessWidget {
             child: Image.network(
               item?.hisPhoto ?? dummyImage,
               width: double.infinity,
-              fit: BoxFit.cover,
+              fit: BoxFit.contain,
             ),
           ),
           Expanded(
@@ -53,6 +53,7 @@ class NursesDetailsScreen extends StatelessWidget {
                       children: [
                         Text(
                           item?.hisName ?? "",
+                          maxLines: 5,
                           style: const TextStyle(
                             color: Colors.blue,
                             fontSize: 20,
@@ -62,6 +63,7 @@ class NursesDetailsScreen extends StatelessWidget {
                         const SizedBox(height: 8),
                         Text(
                           item?.hisSpecialty?.name ?? "",
+                          maxLines: 5,
                           style: const TextStyle(
                             color: Colors.black,
                             fontSize: 16,
@@ -81,11 +83,14 @@ class NursesDetailsScreen extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(width: 8),
-                      Text(
-                        item?.hisAge.toString() ?? "",
-                        style: const TextStyle(
-                          color: Colors.black,
-                          fontSize: 16,
+                      Expanded(
+                        child: Text(
+                          item?.hisAge.toString() ?? "",
+                          maxLines: 5,
+                          style: const TextStyle(
+                            color: Colors.black,
+                            fontSize: 16,
+                          ),
                         ),
                       ),
                     ],
@@ -101,11 +106,14 @@ class NursesDetailsScreen extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(width: 8),
-                      Text(
-                        item?.hisSex ?? "",
-                        style: const TextStyle(
-                          color: Colors.black,
-                          fontSize: 16,
+                      Expanded(
+                        child: Text(
+                          item?.hisSex ?? "",
+                          maxLines: 5,
+                          style: const TextStyle(
+                            color: Colors.black,
+                            fontSize: 16,
+                          ),
                         ),
                       ),
                     ],
@@ -121,11 +129,14 @@ class NursesDetailsScreen extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(width: 8),
-                      Text(
-                        item?.hisGovernorate?.name ?? "",
-                        style: const TextStyle(
-                          color: Colors.black,
-                          fontSize: 16,
+                      Expanded(
+                        child: Text(
+                          item?.hisGovernorate?.name ?? "",
+                          maxLines: 5,
+                          style: const TextStyle(
+                            color: Colors.black,
+                            fontSize: 16,
+                          ),
                         ),
                       ),
                     ],
@@ -141,11 +152,14 @@ class NursesDetailsScreen extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(width: 8),
-                      Text(
-                        item?.hisHospital ?? "",
-                        style: const TextStyle(
-                          color: Colors.black,
-                          fontSize: 16,
+                      Expanded(
+                        child: Text(
+                          item?.hisHospital ?? "",
+                          maxLines: 5,
+                          style: const TextStyle(
+                            color: Colors.black,
+                            fontSize: 16,
+                          ),
                         ),
                       ),
                     ],
@@ -161,11 +175,14 @@ class NursesDetailsScreen extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(width: 8),
-                      Text(
-                        item?.hisNumberForConnect ?? "",
-                        style: const TextStyle(
-                          color: Colors.black,
-                          fontSize: 16,
+                      Expanded(
+                        child: Text(
+                          item?.hisNumberForConnect ?? "",
+                          maxLines: 5,
+                          style: const TextStyle(
+                            color: Colors.black,
+                            fontSize: 16,
+                          ),
                         ),
                       ),
                     ],
@@ -181,11 +198,14 @@ class NursesDetailsScreen extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(width: 8),
-                      Text(
-                        item?.hisEmailForConnect ?? "",
-                        style: const TextStyle(
-                          color: Colors.black,
-                          fontSize: 16,
+                      Expanded(
+                        child: Text(
+                          item?.hisEmailForConnect ?? "",
+                          maxLines: 5,
+                          style: const TextStyle(
+                            color: Colors.black,
+                            fontSize: 16,
+                          ),
                         ),
                       ),
                     ],

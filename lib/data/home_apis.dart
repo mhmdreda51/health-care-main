@@ -76,7 +76,7 @@ class HomeApis {
       data: FormData.fromMap(
         image != null
             ? {
-                "your_photo": MultipartFile.fromFileSync(
+                "user_photo": MultipartFile.fromFileSync(
                   image.path,
                   filename: image.path.split('/').last,
                 ),
@@ -126,7 +126,7 @@ class HomeApis {
       data: NetworkRequestBody.fromData(
         FormData.fromMap({
           if (image != null)
-            "your_photo": MultipartFile.fromFileSync(
+            "user_photo": MultipartFile.fromFileSync(
               image.path,
               filename: image.path.split('/').last,
             ),
@@ -184,10 +184,11 @@ class HomeApis {
     required String medical_rays,
     required File medical_rays_images,
     required String health_habits,
+    required int id,
   }) async {
     final request = NetworkRequest(
-      path: medicalHistory,
-      type: NetworkRequestType.GET,
+      path: "$medicalHistory$id/",
+      type: NetworkRequestType.PUT,
       headers: {
         'Accept': 'application/json',
         'Content-Type': "application/json",
@@ -254,18 +255,48 @@ class HomeApis {
     return data;
   }
 
-  Future getMedicalHistory() async {
-    DioManager.initDioOptions();
-
-    final response = await DioManager.dio.get(
-      medicalHistory,
+  Future<MedicalHistory?> getMedicalHistory() async {
+    final request = NetworkRequest(
+      path: medicalHistory,
+      type: NetworkRequestType.GET,
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': "application/json",
+        "Authorization": "Token ${CacheHelper.getUserToken}"
+      },
+      data: const NetworkRequestBody.empty(),
     );
-    if (response.statusCode == 200) {
-      final medicalHistory = MedicalHistory.fromJson(response.data);
-      return medicalHistory;
-    } else {
-      return response.data["detail"].toString();
-    }
+    final response = await networkService.execute(
+      request,
+      (parser) => MedicalHistory.fromJson(parser),
+    );
+    var data = response.maybeWhen(
+      ok: ((data) {
+        return data;
+      }),
+      orElse: () {
+        return null;
+      },
+      invalidParameters: (data) {
+        return data;
+      },
+      conflict: (data) {
+        return data;
+      },
+      noAccess: (data) {
+        return data;
+      },
+      noAuth: (data) {
+        CacheHelper.signOut();
+        MagicRouter.navigateAndPopAll(const LoginScreen());
+        BotToast.showText(text: "انتهت صلاحيه الجلسه الخاصه بك");
+        return data;
+      },
+      badRequest: (data) {
+        return data;
+      },
+    );
+    return data;
   }
 
   Future getDiseases() async {

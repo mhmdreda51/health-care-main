@@ -32,3 +32,4 @@ class GetNursesSearchError extends NursesState {}
 class SelectCityIdState extends NursesState {}
 
 class SelectSpecialtyIdState extends NursesState {}
+class ClearSearchData extends NursesState {}

@@ -7,7 +7,7 @@ import '../../../core/router/router.dart';
 import '../../profile/view/profile_screen.dart';
 import '../cubit/doctor_screen_cubit.dart';
 import '../widgets/drawer_item.dart';
-import 'history_data_screen.dart';
+import 'medical_history_screen.dart';
 
 class DrawerScreen extends StatelessWidget {
   const DrawerScreen({super.key});
@@ -83,7 +83,10 @@ class DrawerScreen extends StatelessWidget {
                                 MagicRouter.navigateTo(
                                   BlocProvider.value(
                                     value: cubit,
-                                    child: const HistoryDataScreen(),
+                                    child: MedicalHistoryScreen(
+                                      id: cubit.profileModel?.results?[0].id ??
+                                          0,
+                                    ),
                                   ),
                                 );
                               },

@@ -40,7 +40,7 @@ class DoctorScreenCubit extends Cubit<DoctorScreenState> {
     }
   }
 
-  XFile? userimage;
+  File? userimage;
 
   ImagePicker? imagePicker;
 
@@ -48,7 +48,7 @@ class DoctorScreenCubit extends Cubit<DoctorScreenState> {
     final ImagePicker picker = ImagePicker();
     final imageFile = await picker.pickImage(source: ImageSource.gallery);
     if (imageFile == null) return;
-    userimage = imageFile;
+    userimage = File(imageFile.path);
     emit(PickUserImage());
   }
 
@@ -149,6 +149,8 @@ class DoctorScreenCubit extends Cubit<DoctorScreenState> {
     required String medical_rays,
     required File medical_rays_images,
     required String health_habits,
+        required int id,
+
   }) async {
     emit(CreateMedicalLoadingState());
 
@@ -166,6 +168,7 @@ class DoctorScreenCubit extends Cubit<DoctorScreenState> {
       medical_rays: medical_rays,
       medical_rays_images: medical_rays_images,
       health_habits: health_habits,
+      id: id
     );
     if (res is CreateMedicalHistory) {
       emit(CreateMedicalSuccessState());

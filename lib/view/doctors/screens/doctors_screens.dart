@@ -4,6 +4,7 @@ import 'package:health_care/constants/Strins.dart';
 import 'package:health_care/constants/app_colors.dart';
 import 'package:health_care/core/router/router.dart';
 import 'package:health_care/view/doctors/cubit/cubit/doctor_cubit.dart';
+import 'package:health_care/widgets/main_button.dart';
 
 import '../../../data/doctor_apis.dart';
 import '../../../widgets/main_drop_down.dart';
@@ -43,6 +44,7 @@ class DoctorsScreen extends StatelessWidget {
                           child: Column(
                             children: [
                               MainDropDown(
+                                value: cubit.city,
                                 label: "Cities",
                                 list: cubit.citiesModel?.results
                                         ?.map((e) => e.name ?? "")
@@ -55,11 +57,13 @@ class DoctorsScreen extends StatelessWidget {
                                             ) ??
                                             0) +
                                         1,
+                                    val,
                                   );
                                 },
                               ),
                               const SizedBox(height: 20),
                               MainDropDown(
+                                value: cubit.specialt,
                                 label: "Specialty",
                                 list: cubit.specialtyModel?.results
                                         ?.map((e) => e.name ?? "")
@@ -72,9 +76,29 @@ class DoctorsScreen extends StatelessWidget {
                                             ) ??
                                             0) +
                                         1,
+                                    val,
                                   );
                                 },
                               ),
+                              cubit.cityId != null || cubit.specialtyId != null
+                                  ? Column(
+                                      children: [
+                                        const SizedBox(height: 20),
+                                        MainButton(
+                                          onPressed: () {
+                                            cubit.clearSearchData();
+                                          },
+                                          height: 59,
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width /
+                                              2,
+                                          text: "clear search",
+                                          borderRadius: 25,
+                                        ),
+                                      ],
+                                    )
+                                  : const SizedBox(),
                               const SizedBox(height: 20),
                               Expanded(
                                 child: ListView.separated(
@@ -115,6 +139,7 @@ class DoctorsScreen extends StatelessWidget {
                                                 ),
                                                 child: Image.network(
                                                   item?.hisPhoto ?? dummyImage,
+                                                  fit: BoxFit.cover,
                                                   width: MediaQuery.of(context)
                                                       .size
                                                       .width,

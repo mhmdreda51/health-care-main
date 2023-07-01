@@ -5,25 +5,27 @@ import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
 class MainDropDown extends StatefulWidget {
-  const MainDropDown({
+   MainDropDown({
     Key? key,
     required this.label,
     required this.onChanged,
     this.height = 25,
     this.width = 150,
     required this.list,
+    required this.value,
   }) : super(key: key);
   final String label;
   final Function(String) onChanged;
   final double height;
   final double width;
   final List<String> list;
+   String? value;
+
   @override
   State<MainDropDown> createState() => _MainDropDownState();
 }
 
 class _MainDropDownState extends State<MainDropDown> {
-  String? value;
 
   @override
   Widget build(BuildContext context) {
@@ -40,10 +42,12 @@ class _MainDropDownState extends State<MainDropDown> {
             Icons.expand_more,
             color: Colors.grey,
           ),
-          value: value,
+          value:widget. value,
           hint: Text(widget.label),
           onChanged: (val) {
-            setState(() => value = val);
+            setState((){
+               widget.value = val;
+            });
             widget.onChanged(val!);
           },
           items: widget.list

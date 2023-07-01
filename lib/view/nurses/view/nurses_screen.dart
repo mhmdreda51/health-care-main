@@ -3,8 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:health_care/constants/app_colors.dart';
 import 'package:health_care/core/router/router.dart';
 import 'package:health_care/view/nurses/cubit/nurses_cubit.dart';
-import '../../../constants/Strins.dart';
 import '../../../data/nurses_apis.dart';
+import '../../../widgets/main_button.dart';
 import '../../../widgets/main_drop_down.dart';
 import 'nurses_details_screen.dart';
 
@@ -49,6 +49,7 @@ class NurseScreen extends StatelessWidget {
                           child: Column(
                             children: [
                               MainDropDown(
+                                value: cubit.city,
                                 label: "Cities",
                                 list: cubit.citiesModel?.results
                                         ?.map((e) => e.name ?? "")
@@ -56,32 +57,53 @@ class NurseScreen extends StatelessWidget {
                                     [],
                                 onChanged: (val) {
                                   cubit.selectCityId(
-                                      (cubit.citiesModel?.results?.indexWhere(
-                                                (element) =>
-                                                    element.name == val,
-                                              ) ??
-                                              0) +
-                                          1);
+                                    (cubit.citiesModel?.results?.indexWhere(
+                                              (element) => element.name == val,
+                                            ) ??
+                                            0) +
+                                        1,
+                                    val,
+                                  );
                                 },
                               ),
                               const SizedBox(height: 20),
                               MainDropDown(
+                                value: cubit.specialt,
                                 label: "Specialty",
                                 list: cubit.specialtyModel?.results
                                         ?.map((e) => e.name ?? "")
                                         .toList() ??
                                     [],
                                 onChanged: (val) {
-                                  cubit.selectspecialtyId((cubit
-                                              .specialtyModel?.results
-                                              ?.indexWhere(
-                                            (element) => element.name == val,
-                                          ) ??
-                                          0) +
-                                      1);
+                                  cubit.selectspecialtyId(
+                                    (cubit.specialtyModel?.results?.indexWhere(
+                                              (element) => element.name == val,
+                                            ) ??
+                                            0) +
+                                        1,
+                                    val,
+                                  );
                                 },
                               ),
-                              const SizedBox(height: 20),
+                              cubit.cityId != null || cubit.specialtyId != null
+                                  ? Column(
+                                      children: [
+                                        const SizedBox(height: 20),
+                                        MainButton(
+                                          onPressed: () {
+                                            cubit.clearSearchData();
+                                          },
+                                          height: 59,
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width /
+                                              2,
+                                          text: "clear search",
+                                          borderRadius: 25,
+                                        ),
+                                      ],
+                                    )
+                                  : const SizedBox(),
                               const SizedBox(height: 20),
                               Expanded(
                                 child: ListView.separated(
@@ -112,18 +134,22 @@ class NurseScreen extends StatelessWidget {
                                               CrossAxisAlignment.center,
                                           children: [
                                             Expanded(
-                                              child: ClipRRect(
-                                                borderRadius:
-                                                    const BorderRadius.only(
-                                                  topLeft: Radius.circular(15),
-                                                  bottomLeft:
-                                                      Radius.circular(15),
-                                                ),
-                                                child: Image.network(
-                                                  item?.hisPhoto ?? dummyImage,
-                                                  fit: BoxFit.cover,
-                                                ),
-                                              ),
+                                              child: item?.hisPhoto == "null"
+                                                  ? const Icon(Icons.person)
+                                                  : ClipRRect(
+                                                      borderRadius:
+                                                          const BorderRadius
+                                                              .only(
+                                                        topLeft:
+                                                            Radius.circular(15),
+                                                        bottomLeft:
+                                                            Radius.circular(15),
+                                                      ),
+                                                      child: Image.network(
+                                                        item?.hisPhoto ?? "",
+                                                        fit: BoxFit.cover,
+                                                      ),
+                                                    ),
                                             ),
                                             const SizedBox(width: 20),
                                             Expanded(

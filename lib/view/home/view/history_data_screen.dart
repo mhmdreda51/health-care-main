@@ -1,5 +1,7 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:health_care/core/router/router.dart';
 import 'package:health_care/view/home/cubit/doctor_screen_cubit.dart';
 
@@ -7,9 +9,12 @@ import '../../../widgets/custom_text_field.dart';
 import '../../../widgets/main_button.dart';
 import 'home_screen.dart';
 
-class HistoryDataScreen extends StatelessWidget {
-  const HistoryDataScreen({super.key});
-
+class AddHistoryDataScreen extends StatelessWidget {
+  const AddHistoryDataScreen({
+    Key? key,
+    required this.id,
+  }) : super(key: key);
+  final int id;
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<DoctorScreenCubit, DoctorScreenState>(
@@ -22,7 +27,7 @@ class HistoryDataScreen extends StatelessWidget {
         final cubit = DoctorScreenCubit.get(context);
         return Scaffold(
           appBar: AppBar(
-            title: const Text("History Data"),
+            title: const Text("Add History Data"),
           ),
           body: state is CreateMedicalLoadingState
               ? const Center(
@@ -216,6 +221,7 @@ class HistoryDataScreen extends StatelessWidget {
                                     cubit.xray != null &&
                                     cubit.medicines != null) {
                                   cubit.createMedicalHostory(
+                                    id: id,
                                     illnesses_numbers:
                                         cubit.illnessNunController.text,
                                     illnesses: cubit.illnessController.text,

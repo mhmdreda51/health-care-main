@@ -32,3 +32,4 @@ class GetDoctorsSearchLoading extends DoctorState {}
 class GetDoctorsSearchSuccess extends DoctorState {}
 
 class GetDoctorsSearchError extends DoctorState {}
+class ClearSearchData extends DoctorState {}

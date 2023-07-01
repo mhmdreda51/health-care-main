@@ -17,7 +17,7 @@ class ProfileCubit extends Cubit<ProfileState> {
     emit(ProfileScreenInitial());
   }
 
-  XFile? userimage;
+  File? userimage;
 
   ImagePicker? imagePicker;
 
@@ -25,7 +25,7 @@ class ProfileCubit extends Cubit<ProfileState> {
     final ImagePicker picker = ImagePicker();
     final imageFile = await picker.pickImage(source: ImageSource.gallery);
     if (imageFile == null) return;
-    userimage = imageFile;
+    userimage = File(imageFile.path);
     emit(PickUserImage());
   }
 
@@ -35,7 +35,7 @@ class ProfileCubit extends Cubit<ProfileState> {
     String? firstName,
     String? lastName,
     String? age,
-     String? phoneNum,
+    String? phoneNum,
     required int userId,
   }) async {
     emit(EditUserProfileLoading());

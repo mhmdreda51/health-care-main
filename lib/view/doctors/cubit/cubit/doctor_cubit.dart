@@ -46,13 +46,17 @@ class DoctorCubit extends Cubit<DoctorState> {
 
   int? cityId;
   int? specialtyId;
-  selectCityId(int val) {
+  String? city;
+  String? specialt;
+  selectCityId(int val, String value) {
     cityId = val;
+    city = value;
     emit(SelectCityIdState());
   }
 
-  selectspecialtyId(int val) {
+  selectspecialtyId(int val, String value) {
     specialtyId = val;
+    specialt = value;
     emit(SelectSpecialtyIdState());
   }
 
@@ -78,5 +82,13 @@ class DoctorCubit extends Cubit<DoctorState> {
 
   void goToGoogleMaps(String city) async {
     launch('https://www.google.com/maps/search/$city');
+  }
+
+  void clearSearchData() {
+    cityId = null;
+    specialtyId = null;
+    city = null;
+    specialt = null;
+    emit(ClearSearchData());
   }
 }

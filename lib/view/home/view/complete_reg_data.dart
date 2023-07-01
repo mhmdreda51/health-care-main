@@ -10,6 +10,7 @@ import 'package:health_care/view/home/view/home_screen.dart';
 
 import '../../../widgets/app_text_form_field.dart';
 import '../../../widgets/main_button.dart';
+import '../../../widgets/select_user_image.dart';
 
 class CompleteRegisterData extends StatelessWidget {
   const CompleteRegisterData({
@@ -42,44 +43,10 @@ class CompleteRegisterData extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Stack(
-                            alignment: Alignment.bottomRight,
-                            children: [
-                              Container(
-                                width: 150,
-                                height: 150,
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  image: DecorationImage(
-                                    fit: BoxFit.cover,
-                                    image: cubit.userimage == null
-                                        ? const AssetImage(
-                                            "assets/images/doctor.jpg",
-                                          )
-                                        : FileImage(
-                                            File(
-                                              cubit.userimage?.path ?? "",
-                                            ),
-                                          ) as ImageProvider,
-                                  ),
-                                ),
-                              ),
-                              Positioned(
-                                bottom: 10,
-                                child: GestureDetector(
-                                  onTap: () {
-                                    cubit.pickImageFromGallery();
-                                  },
-                                  child: const Icon(
-                                    Icons.camera_alt_outlined,
-                                    size: 30,
-                                    color: Colors.black,
-                                  ),
-                                ),
-                              )
-                            ],
+                          SelectUserImage(
+                            userImage: cubit.userimage,
+                            onTap: cubit.pickImageFromGallery,
                           ),
-                          const SizedBox(height: 20),
                           AppTextFormField(
                             maxLines: 1,
                             icon: Icons.person,
@@ -157,8 +124,7 @@ class CompleteRegisterData extends StatelessWidget {
                             height: 50,
                             onPressed: () {
                               if (cubit.profileFormKey.currentState!
-                                      .validate() &&
-                                  cubit.userimage != null) {
+                                  .validate()) {
                                 cubit.editUserProfile(
                                   image: File(
                                     cubit.userimage?.path ?? "",

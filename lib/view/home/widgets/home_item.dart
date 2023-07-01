@@ -36,6 +36,7 @@ class HomeItem extends StatelessWidget {
                 ),
                 child: Image.asset(
                   image,
+                  height: MediaQuery.of(context).size.height,
                   fit: BoxFit.cover,
                 ),
               ),

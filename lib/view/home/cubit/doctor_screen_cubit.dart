@@ -136,21 +136,20 @@ class DoctorScreenCubit extends Cubit<DoctorScreenState> {
   }
 
   Future createMedicalHostory({
-    required String illnesses_numbers,
-    required String illnesses,
-    required String illnesses_descriptions,
-    required String allergies,
-    required String surgeries,
-    required String immunizations,
-    required String results_of_physical_exams_and_tests,
-    required File physical_exams_and_tests_images,
-    required String medicines,
-    required File medicines_images,
-    required String medical_rays,
-    required File medical_rays_images,
-    required String health_habits,
-        required int id,
-
+    String? illnesses_numbers,
+    String? illnesses,
+    String? illnesses_descriptions,
+    String? allergies,
+    String? surgeries,
+    String? immunizations,
+    String? results_of_physical_exams_and_tests,
+    File? physical_exams_and_tests_images,
+    String? medicines,
+    File? medicines_images,
+    String? medical_rays,
+    File? medical_rays_images,
+    String? health_habits,
+    required int id,
   }) async {
     emit(CreateMedicalLoadingState());
 
@@ -168,7 +167,7 @@ class DoctorScreenCubit extends Cubit<DoctorScreenState> {
       medical_rays: medical_rays,
       medical_rays_images: medical_rays_images,
       health_habits: health_habits,
-      id: id
+      id: id,
     );
     if (res is CreateMedicalHistory) {
       emit(CreateMedicalSuccessState());

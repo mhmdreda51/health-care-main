@@ -171,19 +171,19 @@ class HomeApis {
   }
 
   Future<CreateMedicalHistory?> addMedicalHistory({
-    required String illnesses_numbers,
-    required String illnesses,
-    required String illnesses_descriptions,
-    required String allergies,
-    required String surgeries,
-    required String immunizations,
-    required String results_of_physical_exams_and_tests,
-    required File physical_exams_and_tests_images,
-    required String medicines,
-    required File medicines_images,
-    required String medical_rays,
-    required File medical_rays_images,
-    required String health_habits,
+    String? illnesses_numbers,
+    String? illnesses,
+    String? illnesses_descriptions,
+    String? allergies,
+    String? surgeries,
+    String? immunizations,
+    String? results_of_physical_exams_and_tests,
+    File? physical_exams_and_tests_images,
+    String? medicines,
+    File? medicines_images,
+    String? medical_rays,
+    File? medical_rays_images,
+    String? health_habits,
     required int id,
   }) async {
     final request = NetworkRequest(
@@ -196,29 +196,34 @@ class HomeApis {
       },
       data: NetworkRequestBody.fromData(FormData.fromMap(
         {
-          "illnesses_numbers": illnesses_numbers,
-          "illnesses": illnesses,
-          "illnesses_descriptions": illnesses_descriptions,
-          "allergies": allergies,
-          "surgeries": surgeries,
-          "immunizations": immunizations,
-          "results_of_physical_exams_and_tests":
-              results_of_physical_exams_and_tests,
-          "medicines": medicines,
-          "medical_rays": medical_rays,
-          "health_habits": health_habits,
-          "physical_exams_and_tests_images": MultipartFile.fromFileSync(
-            physical_exams_and_tests_images.path,
-            filename: physical_exams_and_tests_images.path.split('/').last,
-          ),
-          "medicines_images": MultipartFile.fromFileSync(
-            medicines_images.path,
-            filename: medicines_images.path.split('/').last,
-          ),
-          "medical_rays_images": MultipartFile.fromFileSync(
-            medical_rays_images.path,
-            filename: medical_rays_images.path.split('/').last,
-          ),
+          if (illnesses_numbers != null) "illnesses_numbers": illnesses_numbers,
+          if (illnesses != null) "illnesses": illnesses,
+          if (illnesses_descriptions != null)
+            "illnesses_descriptions": illnesses_descriptions,
+          if (allergies != null) "allergies": allergies,
+          if (surgeries != null) "surgeries": surgeries,
+          if (immunizations != null) "immunizations": immunizations,
+          if (results_of_physical_exams_and_tests != null)
+            "results_of_physical_exams_and_tests":
+                results_of_physical_exams_and_tests,
+          if (medicines != null) "medicines": medicines,
+          if (medical_rays != null) "medical_rays": medical_rays,
+          if (health_habits != null) "health_habits": health_habits,
+          if (physical_exams_and_tests_images != null)
+            "physical_exams_and_tests_images": MultipartFile.fromFileSync(
+              physical_exams_and_tests_images.path,
+              filename: physical_exams_and_tests_images.path.split('/').last,
+            ),
+          if (medicines_images != null)
+            "medicines_images": MultipartFile.fromFileSync(
+              medicines_images.path,
+              filename: medicines_images.path.split('/').last,
+            ),
+          if (medical_rays_images != null)
+            "medical_rays_images": MultipartFile.fromFileSync(
+              medical_rays_images.path,
+              filename: medical_rays_images.path.split('/').last,
+            ),
         },
       )),
     );

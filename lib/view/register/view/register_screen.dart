@@ -62,8 +62,8 @@ class RegisterScreen extends StatelessWidget {
                                   if (value == null || value.trim().isEmpty) {
                                     return 'This field is required';
                                   }
-                                  if (value.trim().length < 4) {
-                                    return 'Username must be at least 4 characters in length';
+                                  if (value.trim().length < 3) {
+                                    return 'Username must be at least 3 characters in length';
                                   }
                                   return null;
                                 },

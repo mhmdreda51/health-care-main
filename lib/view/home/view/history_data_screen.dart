@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:health_care/core/router/router.dart';
+import 'package:health_care/core/validator.dart';
 import 'package:health_care/view/home/cubit/doctor_screen_cubit.dart';
 
 import '../../../widgets/custom_text_field.dart';
@@ -47,6 +48,7 @@ class AddHistoryDataScreen extends StatelessWidget {
                             hintText: "illnesses numbers",
                             keyboardType: TextInputType.number,
                             controller: cubit.illnessNunController,
+                            validator: Validator.validateEmpty,
                           ),
                           const SizedBox(height: 20),
                           const Text("illnesses"),
@@ -216,33 +218,59 @@ class AddHistoryDataScreen extends StatelessWidget {
                               height: 50,
                               onPressed: () {
                                 if (cubit.medicalFormKey.currentState!
-                                        .validate() &&
-                                    cubit.tests != null &&
-                                    cubit.xray != null &&
-                                    cubit.medicines != null) {
+                                    .validate()) {
                                   cubit.createMedicalHostory(
                                     id: id,
                                     illnesses_numbers:
-                                        cubit.illnessNunController.text,
-                                    illnesses: cubit.illnessController.text,
+                                        cubit.illnessNunController.text == ""
+                                            ? null
+                                            : cubit.illnessNunController.text,
+                                    illnesses:
+                                        cubit.illnessController.text == ""
+                                            ? null
+                                            : cubit.illnessController.text,
                                     illnesses_descriptions:
-                                        cubit.illnessDiscController.text,
-                                    allergies: cubit.allergiesController.text,
-                                    surgeries: cubit.surgeriesController.text,
+                                        cubit.illnessDiscController.text == ""
+                                            ? null
+                                            : cubit.illnessDiscController.text,
+                                    allergies:
+                                        cubit.allergiesController.text == ""
+                                            ? null
+                                            : cubit.allergiesController.text,
+                                    surgeries:
+                                        cubit.surgeriesController.text == ""
+                                            ? null
+                                            : cubit.surgeriesController.text,
                                     immunizations:
-                                        cubit.immunizationsController.text,
+                                        cubit.immunizationsController.text == ""
+                                            ? null
+                                            : cubit
+                                                .immunizationsController.text,
                                     results_of_physical_exams_and_tests: cubit
-                                        .results_of_physical_exams_and_testsController
-                                        .text,
+                                                .results_of_physical_exams_and_testsController
+                                                .text ==
+                                            ""
+                                        ? null
+                                        : cubit
+                                            .results_of_physical_exams_and_testsController
+                                            .text,
                                     physical_exams_and_tests_images:
-                                        cubit.tests!,
-                                    medicines: cubit.medicinesController.text,
-                                    medicines_images: cubit.medicines!,
+                                        cubit.tests,
+                                    medicines:
+                                        cubit.medicinesController.text == ""
+                                            ? null
+                                            : cubit.medicinesController.text,
+                                    medicines_images: cubit.medicines,
                                     medical_rays:
-                                        cubit.medical_raysController.text,
-                                    medical_rays_images: cubit.medicines!,
+                                        cubit.medical_raysController.text == ""
+                                            ? null
+                                            : cubit.medical_raysController.text,
+                                    medical_rays_images: cubit.medicines,
                                     health_habits:
-                                        cubit.health_habitsController.text,
+                                        cubit.health_habitsController.text == ""
+                                            ? null
+                                            : cubit
+                                                .health_habitsController.text,
                                   );
                                 }
                               },

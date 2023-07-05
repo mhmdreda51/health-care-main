@@ -55,8 +55,8 @@ class CompleteRegisterData extends StatelessWidget {
                               if (value.isEmpty) {
                                 return "Must not be empty";
                               }
-                              if (value.trim().length < 4) {
-                                return 'Username must be at least 4 characters in length';
+                              if (value.trim().length < 3) {
+                                return 'Username must be at least 3 characters in length';
                               }
                               return null;
                             },
@@ -73,8 +73,8 @@ class CompleteRegisterData extends StatelessWidget {
                               if (value.isEmpty) {
                                 return "Must not be empty";
                               }
-                              if (value.trim().length < 4) {
-                                return 'Username must be at least 4 characters in length';
+                              if (value.trim().length < 3) {
+                                return 'Username must be at least 3 characters in length';
                               }
                               return null;
                             },
@@ -123,29 +123,24 @@ class CompleteRegisterData extends StatelessWidget {
                             borderRadius: 35,
                             height: 50,
                             onPressed: () {
-                              if (cubit.profileFormKey.currentState!
-                                  .validate()) {
-                                cubit.editUserProfile(
-                                  image: File(
-                                    cubit.userimage?.path ?? "",
-                                  ),
-                                  firstName:
-                                      cubit.firstNameController.text == ""
-                                          ? null
-                                          : cubit.firstNameController.text,
-                                  lastName: cubit.lastNameController.text == ""
-                                      ? null
-                                      : cubit.lastNameController.text,
-                                  age: cubit.ageController.text == ""
-                                      ? null
-                                      : cubit.ageController.text,
-                                  phoneNum:
-                                      cubit.phoneNumberController.text == ""
-                                          ? null
-                                          : cubit.phoneNumberController.text,
-                                  userId: id,
-                                );
-                              }
+                              cubit.editUserProfile(
+                                image: File(
+                                  cubit.userimage?.path ?? "",
+                                ),
+                                firstName: cubit.firstNameController.text == ""
+                                    ? null
+                                    : cubit.firstNameController.text,
+                                lastName: cubit.lastNameController.text == ""
+                                    ? null
+                                    : cubit.lastNameController.text,
+                                age: cubit.ageController.text == ""
+                                    ? null
+                                    : cubit.ageController.text,
+                                phoneNum: cubit.phoneNumberController.text == ""
+                                    ? null
+                                    : cubit.phoneNumberController.text,
+                                userId: id,
+                              );
                             },
                             text: "Save",
                             width: MediaQuery.of(context).size.width / 1.5,

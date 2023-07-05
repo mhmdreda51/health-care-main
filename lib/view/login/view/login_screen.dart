@@ -57,13 +57,12 @@ class LoginScreen extends StatelessWidget {
                               ),
                               const SizedBox(height: 30),
                               AppTextFormField(
-                                                      type: TextInputType.text,
-
+                                type: TextInputType.text,
                                 maxLines: 1,
                                 icon: Icons.person,
                                 validator: (value) {
-                                  if (value!.isEmpty || value.length < 5) {
-                                    return "Username must be at least 5 characters";
+                                  if (value!.isEmpty || value.length < 3) {
+                                    return "Username must be at least 3 characters";
                                   }
                                   return null;
                                 },

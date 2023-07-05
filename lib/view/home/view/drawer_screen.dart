@@ -78,7 +78,7 @@ class DrawerScreen extends StatelessWidget {
                             ),
                             const SizedBox(height: 20),
                             DrawerItem(
-                              title: "History Data",
+                              title: "Medical History",
                               onTap: () {
                                 MagicRouter.navigateTo(
                                   BlocProvider.value(

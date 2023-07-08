@@ -227,7 +227,7 @@ class DoctorScreenCubit extends Cubit<DoctorScreenState> {
       lastName: lastName,
       phoneNum: phoneNum,
       userId: userId,
-      // image: image,
+      image: image,
     );
     if (res is EditUserModel) {
       emit(EditUserProfileSuccess());

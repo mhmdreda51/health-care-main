@@ -87,11 +87,7 @@ class CompleteRegisterData extends StatelessWidget {
                             maxLines: 1,
                             icon: Icons.person,
                             type: TextInputType.number,
-                            validator: (value) {
-                              if (value.isEmpty) {
-                                return "Must not be empty";
-                              }
-                            },
+                            validator: (value) {},
                             controller: cubit.ageController,
                             hintText: "Age",
                             iconColor: Colors.blue,
@@ -104,9 +100,6 @@ class CompleteRegisterData extends StatelessWidget {
                             validator: (String value) {
                               String pattern = r'(^[0-9]*$)';
                               RegExp regExp = RegExp(pattern);
-                              if (value.isEmpty) {
-                                return "Must not be empty";
-                              }
                               if (value.length != 11) {
                                 return "Phone number must be 11 digits";
                               } else if (!regExp.hasMatch(value)) {
@@ -123,24 +116,29 @@ class CompleteRegisterData extends StatelessWidget {
                             borderRadius: 35,
                             height: 50,
                             onPressed: () {
-                              cubit.editUserProfile(
-                                image: File(
-                                  cubit.userimage?.path ?? "",
-                                ),
-                                firstName: cubit.firstNameController.text == ""
-                                    ? null
-                                    : cubit.firstNameController.text,
-                                lastName: cubit.lastNameController.text == ""
-                                    ? null
-                                    : cubit.lastNameController.text,
-                                age: cubit.ageController.text == ""
-                                    ? null
-                                    : cubit.ageController.text,
-                                phoneNum: cubit.phoneNumberController.text == ""
-                                    ? null
-                                    : cubit.phoneNumberController.text,
-                                userId: id,
-                              );
+                              if (cubit.profileFormKey.currentState!
+                                  .validate()) {
+                                cubit.editUserProfile(
+                                  image: File(
+                                    cubit.userimage?.path ?? "",
+                                  ),
+                                  firstName:
+                                      cubit.firstNameController.text == ""
+                                          ? null
+                                          : cubit.firstNameController.text,
+                                  lastName: cubit.lastNameController.text == ""
+                                      ? null
+                                      : cubit.lastNameController.text,
+                                  age: cubit.ageController.text == ""
+                                      ? null
+                                      : cubit.ageController.text,
+                                  phoneNum:
+                                      cubit.phoneNumberController.text == ""
+                                          ? null
+                                          : cubit.phoneNumberController.text,
+                                  userId: id,
+                                );
+                              }
                             },
                             text: "Save",
                             width: MediaQuery.of(context).size.width / 1.5,

@@ -23,14 +23,12 @@ class DioHelper {
     required String url,
     Map<String, dynamic>? query,
   }) async {
-    dio!.options.headers = CacheHelper.getUserToken == null
-        ? {
-            'Content-Type': 'application/json',
-          }
-        : {
-            'Content-Type': 'application/json',
-            'Authorization': 'Token ${CacheHelper.getUserToken}',
-          };
+    dio!.options.headers = {
+      'Accept': 'application/json',
+      'Content-Type': "application/json",
+      if (CacheHelper.getUserToken != null)
+        "Authorization": "Token ${CacheHelper.getUserToken}"
+    };
     return await dio!.get(
       url,
       queryParameters: query,
@@ -43,14 +41,12 @@ class DioHelper {
     dynamic data,
     Map<String, dynamic>? query,
   }) async {
-    dio!.options.headers = CacheHelper.getUserToken == null
-        ? {
-            'Content-Type': 'application/json',
-          }
-        : {
-            'Content-Type': 'application/json',
-            'Authorization': 'Token ${CacheHelper.getUserToken}',
-          };
+    dio!.options.headers ={
+      'Accept': 'application/json',
+      'Content-Type': "application/json",
+      if (CacheHelper.getUserToken != null)
+        "Authorization": "Token ${CacheHelper.getUserToken}"
+    };
     return dio!.post(
       url,
       queryParameters: query,

@@ -23,6 +23,7 @@ final NetworkService networkService = NetworkService(
   httpHeaders: {
     'Accept': 'application/json',
     'Content-Type': "application/json",
-    "Authorization": "Token ${CacheHelper.getUserToken}"
+    if (CacheHelper.getUserToken != null)
+      "Authorization": "Token ${CacheHelper.getUserToken}"
   },
 );

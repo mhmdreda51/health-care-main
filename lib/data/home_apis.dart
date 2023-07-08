@@ -24,10 +24,11 @@ class HomeApis {
     final request = NetworkRequest(
       path: "accounts/profiles/",
       type: NetworkRequestType.GET,
-      headers: {
+     headers: {
         'Accept': 'application/json',
         'Content-Type': "application/json",
-        "Authorization": "Token ${CacheHelper.getUserToken}"
+        if (CacheHelper.getUserToken != null)
+          "Authorization": "Token ${CacheHelper.getUserToken}"
       },
       data: const NetworkRequestBody.empty(),
     );
@@ -73,25 +74,17 @@ class HomeApis {
   }) async {
     final response = await DioHelper.postData(
       url: profile,
-      data: FormData.fromMap(
-        image != null
-            ? {
-                "user_photo": MultipartFile.fromFileSync(
-                  image.path,
-                  filename: image.path.split('/').last,
-                ),
-                "first_name": firstName,
-                "last_name": lastName,
-                "age": age,
-                "phone_number": phoneNum,
-              }
-            : {
-                "first_name": firstName,
-                "last_name": lastName,
-                "age": age,
-                "phone_number": phoneNum,
-              },
-      ),
+      data: FormData.fromMap({
+        if (image != null)
+          "user_photo": MultipartFile.fromFileSync(
+            image.path,
+            filename: image.path.split('/').last,
+          ),
+        "first_name": firstName,
+        "last_name": lastName,
+        "age": age,
+        "phone_number": phoneNum,
+      }),
     );
     if (response.statusCode == 200) {
       final profileModel = ProfileModel.fromJson(response.data);
@@ -113,16 +106,12 @@ class HomeApis {
     final request = NetworkRequest(
       path: "$profile/$userId/",
       type: NetworkRequestType.PUT,
-      headers: CacheHelper.getUserToken != null
-          ? {
-              'Accept': 'application/json',
-              'Content-Type': "application/json",
-              "Authorization": "Token ${CacheHelper.getUserToken}"
-            }
-          : {
-              'Accept': 'application/json',
-              'Content-Type': "application/json",
-            },
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': "application/json",
+        if (CacheHelper.getUserToken != null)
+          "Authorization": "Token ${CacheHelper.getUserToken}"
+      },
       data: NetworkRequestBody.fromData(
         FormData.fromMap({
           if (image != null)
@@ -192,7 +181,8 @@ class HomeApis {
       headers: {
         'Accept': 'application/json',
         'Content-Type': "application/json",
-        "Authorization": "Token ${CacheHelper.getUserToken}"
+        if (CacheHelper.getUserToken != null)
+          "Authorization": "Token ${CacheHelper.getUserToken}"
       },
       data: NetworkRequestBody.fromData(FormData.fromMap(
         {
@@ -264,10 +254,11 @@ class HomeApis {
     final request = NetworkRequest(
       path: medicalHistory,
       type: NetworkRequestType.GET,
-      headers: {
+     headers: {
         'Accept': 'application/json',
         'Content-Type': "application/json",
-        "Authorization": "Token ${CacheHelper.getUserToken}"
+        if (CacheHelper.getUserToken != null)
+          "Authorization": "Token ${CacheHelper.getUserToken}"
       },
       data: const NetworkRequestBody.empty(),
     );

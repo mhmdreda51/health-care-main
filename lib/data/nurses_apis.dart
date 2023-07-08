@@ -60,10 +60,11 @@ class NursesApis {
         if (specialtyId != null) "his_specialty": specialtyId,
         if (cityId != null) "his_city": cityId,
       },
-      headers: {
+     headers: {
         'Accept': 'application/json',
         'Content-Type': "application/json",
-        "Authorization": "Token ${CacheHelper.getUserToken}"
+        if (CacheHelper.getUserToken != null)
+          "Authorization": "Token ${CacheHelper.getUserToken}"
       },
       data: const NetworkRequestBody.empty(),
     );
